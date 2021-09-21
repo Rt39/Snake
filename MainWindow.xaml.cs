@@ -18,8 +18,22 @@ namespace Snake {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        private GameField _gameField;
+        private SnakeEntity _snakeEntity;
         public MainWindow() {
             InitializeComponent();
+            _gameField = new GameField(
+                gameField,
+                40,
+                20,
+                Brushes.White.Color,
+                Brushes.Gray.Color
+                );
+            _gameField.DrawGameField();
+
+            _snakeEntity = new SnakeEntity(gameField, _gameField);
+            _snakeEntity.InitialSnake(4);
         }
+
     }
 }

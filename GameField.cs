@@ -27,7 +27,7 @@ namespace Snake {
         private Image _background = null;
         public Image Background { get { return _background; } }
 
-        public GameField(Canvas gameField,int widthGridCount, int heightGridCount, Color grid1Color, Color grid2Color, Image background = null) {
+        public GameField(Canvas gameField, int widthGridCount, int heightGridCount, Color grid1Color, Color grid2Color, Image background = null) {
             _gameField = gameField;
             _widthGridCount = widthGridCount;
             _heightGridCount = heightGridCount;
@@ -38,9 +38,9 @@ namespace Snake {
 
         public void DrawGameField() {
             bool outer_interval = true;
-            for(int i = 0; i < _heightGridCount; ++i) {
+            for (int i = 0; i < _heightGridCount; ++i) {
                 bool inner_interval = outer_interval;
-                for(int j = 0; j < _widthGridCount; ++j) {
+                for (int j = 0; j < _widthGridCount; ++j) {
                     Rectangle rectangle = new Rectangle() { Width = GridSize.gridSize, Height = GridSize.gridSize };
                     rectangle.Fill = inner_interval ?
                         new SolidColorBrush(_grid1Color) : new SolidColorBrush(_grid2Color);

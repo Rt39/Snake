@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Canvas x:Name="gameField" ClipToBounds="True"></Canvas>
+        <Canvas Margin="10" x:Name="gameField" ClipToBounds="True"></Canvas>
     </Grid>
 </Window>
