@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,20 +20,45 @@ namespace Snake {
     public partial class MainWindow : Window {
         private GameField _gameField;
         private SnakeEntity _snakeEntity;
+        private GameControl _gameControl;
+
         public MainWindow() {
             InitializeComponent();
             _gameField = new GameField(
                 gameField,
-                40,
-                20,
-                Brushes.White.Color,
-                Brushes.Gray.Color
+                33,
+                16,
+                Brushes.White,
+                Brushes.Gray
                 );
             _gameField.DrawGameField();
 
             _snakeEntity = new SnakeEntity(gameField, _gameField);
             _snakeEntity.InitialSnake(4);
+
+            _gameControl = new GameControl(gameField, _gameField, _snakeEntity, new List<Entities.Brick>());
+            _gameControl.StartTick();
         }
 
+        private void ChangeDirection(object sender, KeyEventArgs e) {
+            switch (e.Key) {
+                case Key.Left:
+                    if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Left && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Right)
+                        _snakeEntity.Direction = SnakeEntity.SnakeDirection.Left;
+                    break;
+                case Key.Up:
+                    if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Up && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Down)
+                        _snakeEntity.Direction = SnakeEntity.SnakeDirection.Up;
+                    break;
+                case Key.Right:
+                    if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Left && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Right)
+                        _snakeEntity.Direction = SnakeEntity.SnakeDirection.Right;
+                    break;
+                case Key.Down:
+                    if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Up && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Down)
+                        _snakeEntity.Direction = SnakeEntity.SnakeDirection.Down;
+                    break;
+            }
+        }
     }
 }

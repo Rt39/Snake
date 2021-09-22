@@ -55,8 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entities\Brick.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\Food.cs" />
     <Compile Include="GameControl.cs" />
-    <Compile Include="GridSize.cs" />
+    <Compile Include="StaticUtils.cs" />
     <Compile Include="SnakeEntity.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -98,6 +101,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dao\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

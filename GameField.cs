@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,17 +17,20 @@ namespace Snake {
         public int WidthGridCount { get { return _widthGridCount; } }
         public int HeightGridCount { get { return _heightGridCount; } }
 
+        public int WidthTotal { get { return StaticUtils.gridSize * _widthGridCount; } }
+        public int HeightTotal { get { return StaticUtils.gridSize * _heightGridCount; } }
+
         // 相间格子的颜色
-        private Color _grid1Color;
-        private Color _grid2Color;
-        public Color Grid1Color { get { return _grid1Color; } }
-        public Color Grid2Color { get { return _grid2Color; } }
+        private Brush _grid1Color;
+        private Brush _grid2Color;
+        public Brush Grid1Color { get { return _grid1Color; } }
+        public Brush Grid2Color { get { return _grid2Color; } }
 
         // 背景图片
         private Image _background = null;
         public Image Background { get { return _background; } }
 
-        public GameField(Canvas gameField, int widthGridCount, int heightGridCount, Color grid1Color, Color grid2Color, Image background = null) {
+        public GameField(Canvas gameField, int widthGridCount, int heightGridCount, Brush grid1Color, Brush grid2Color, Image background = null) {
             _gameField = gameField;
             _widthGridCount = widthGridCount;
             _heightGridCount = heightGridCount;
@@ -41,13 +44,12 @@ namespace Snake {
             for (int i = 0; i < _heightGridCount; ++i) {
                 bool inner_interval = outer_interval;
                 for (int j = 0; j < _widthGridCount; ++j) {
-                    Rectangle rectangle = new Rectangle() { Width = GridSize.gridSize, Height = GridSize.gridSize };
-                    rectangle.Fill = inner_interval ?
-                        new SolidColorBrush(_grid1Color) : new SolidColorBrush(_grid2Color);
+                    Rectangle rectangle = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize };
+                    rectangle.Fill = inner_interval ? _grid1Color : _grid2Color;
                     inner_interval = !inner_interval;   // 间隔放置方块
                     _gameField.Children.Add(rectangle);
-                    Canvas.SetLeft(rectangle, j * GridSize.gridSize);
-                    Canvas.SetTop(rectangle, i * GridSize.gridSize);
+                    Canvas.SetLeft(rectangle, j * StaticUtils.gridSize);
+                    Canvas.SetTop(rectangle, i * StaticUtils.gridSize);
                 }
                 outer_interval = !outer_interval;
             }

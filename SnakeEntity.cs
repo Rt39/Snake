@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +14,43 @@ namespace Snake {
             public UIElement snakeShape;
             public Point position;
         }
+        private class SnakePartList {
+            private Canvas _canvas;
+            private List<SnakePart> _snakeParts = new List<SnakePart>();
+            public List<SnakePart> SnakeParts { get { return _snakeParts; } }
+            public SnakePartList(Canvas canvas) { _canvas = canvas; }
+            public SnakePart this[int index] { get { return _snakeParts[index]; } }
+            public int Count { get { return _snakeParts.Count; } }
+
+            public void Insert(int index, SnakePart item) {
+                _snakeParts.Insert(index, item);
+                _canvas.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _canvas.Children.Add(item.snakeShape);
+                    Canvas.SetLeft(item.snakeShape, item.position.X);
+                    Canvas.SetTop(item.snakeShape, item.position.Y);
+                }
+                ));
+            }
+            public void Add(SnakePart item) {
+                _snakeParts.Add(item);
+                _canvas.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _canvas.Children.Add(item.snakeShape);
+                    Canvas.SetLeft(item.snakeShape, item.position.X);
+                    Canvas.SetTop(item.snakeShape, item.position.Y);
+                }));
+            }
+            public void RemoveAt(int index) {
+                _canvas.Dispatcher.Invoke(new Action(() =>
+                {
+                    _canvas.Children.Remove(_snakeParts[index].snakeShape);
+                    Canvas.SetLeft(_snakeParts[index].snakeShape, _snakeParts[index].position.X);
+                    Canvas.SetTop(_snakeParts[index].snakeShape, _snakeParts[index].position.Y);
+                }));
+                _snakeParts.RemoveAt(index);
+            }
+        }
 
         public enum SnakeDirection {
             Left,
@@ -22,79 +59,75 @@ namespace Snake {
             Down,
         }
         public SnakeDirection Direction { get; set; } = SnakeDirection.Right;
+        public Point HeadPosition { get { return _snakeParts[0].position; } }
 
         private readonly GameField _gameField;
         private readonly Canvas _canvas;
-        private readonly List<SnakePart> _snakeParts;
+        private readonly SnakePartList _snakeParts;
 
         public SnakeEntity(Canvas canvas, GameField gameField) {
             _canvas = canvas;
             _gameField = gameField;
-            _snakeParts = new List<SnakePart>();
+            _snakeParts = new SnakePartList(canvas);
         }
 
         public void InitialSnake(int initialcount) {
-            int y = _gameField.HeightGridCount / 2 * GridSize.gridSize;
-            int headx = GridSize.gridSize * (initialcount + 1);
+            int y = _gameField.HeightGridCount / 2 * StaticUtils.gridSize;
+            int headx = StaticUtils.gridSize * (initialcount + 1);
             _snakeParts.Add(new SnakePart()
             {
                 position = new Point(headx, y),
-                snakeShape = new Rectangle() { Width = GridSize.gridSize, Height = GridSize.gridSize, Fill = Brushes.Red }
+                snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Red }
             });
             for (int i = 1; i <= initialcount; ++i)
                 _snakeParts.Add(new SnakePart()
                 {
-                    position = new Point(headx - i * GridSize.gridSize, y),
-                    snakeShape = new Rectangle() { Width = GridSize.gridSize, Height = GridSize.gridSize, Fill = Brushes.Green }
+                    position = new Point(headx - i * StaticUtils.gridSize, y),
+                    snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Green }
                 });
-
-            foreach (SnakePart v in _snakeParts) {
-                _canvas.Children.Add(v.snakeShape);
-                Canvas.SetLeft(v.snakeShape, v.position.X);
-                Canvas.SetTop(v.snakeShape, v.position.Y);
-            }
         }
 
-        public void MoveSnake() {
-            _canvas.Children.Remove(_snakeParts[_snakeParts.Count - 1].snakeShape);
-            _snakeParts.RemoveAt(_snakeParts.Count - 1);
+        public void MoveSnake(bool eat) {
+            if (!eat) {
+                // 删除蛇尾
+                _snakeParts.RemoveAt(_snakeParts.Count - 1);
+            }
+            // 将蛇头改为绿色
             ((Rectangle)_snakeParts[0].snakeShape).Fill = Brushes.Green;
 
+            // 添加蛇头
             Point headPoint = _snakeParts[0].position;
             switch (Direction) {
                 case SnakeDirection.Left:
                     _snakeParts.Insert(0, new SnakePart()
                     {
-                        position = new Point(headPoint.X - GridSize.gridSize, headPoint.Y),
-                        snakeShape = new Rectangle() { Width = GridSize.gridSize, Height = GridSize.gridSize, Fill = Brushes.Red }
-                    });
-                    break;
-                case SnakeDirection.Up:
-                    _snakeParts.Insert(0, new SnakePart()
-                    {
-                        position = new Point(headPoint.X, headPoint.Y + GridSize.gridSize),
-                        snakeShape = new Rectangle() { Width = GridSize.gridSize, Height = GridSize.gridSize, Fill = Brushes.Red }
-                    });
-                    break;
-                case SnakeDirection.Right:
-                    _snakeParts.Insert(0, new SnakePart()
-                    {
-                        position = new Point(headPoint.X + GridSize.gridSize, headPoint.Y),
-                        snakeShape = new Rectangle() { Width = GridSize.gridSize, Height = GridSize.gridSize, Fill = Brushes.Red }
+                        // Wrap
+                        position = new Point((headPoint.X + _gameField.WidthTotal - StaticUtils.gridSize) % _gameField.WidthTotal, headPoint.Y),
+                        snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Red }
                     });
                     break;
                 case SnakeDirection.Down:
                     _snakeParts.Insert(0, new SnakePart()
                     {
-                        position = new Point(headPoint.X, headPoint.Y - GridSize.gridSize),
-                        snakeShape = new Rectangle() { Width = GridSize.gridSize, Height = GridSize.gridSize, Fill = Brushes.Red }
+                        position = new Point(headPoint.X, (headPoint.Y + StaticUtils.gridSize) % _gameField.HeightTotal),
+                        snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Red }
+                    });
+                    break;
+                case SnakeDirection.Right:
+                    _snakeParts.Insert(0, new SnakePart()
+                    {
+                        position = new Point((headPoint.X + StaticUtils.gridSize) % _gameField.WidthTotal, headPoint.Y),
+                        snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Red }
+                    });
+                    break;
+                case SnakeDirection.Up:
+                    _snakeParts.Insert(0, new SnakePart()
+                    {
+                        position = new Point(headPoint.X, (headPoint.Y + _gameField.HeightTotal - StaticUtils.gridSize) % _gameField.HeightTotal),
+                        snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Red }
                     });
                     break;
             }
-
-            _canvas.Children.Add(_snakeParts[0].snakeShape);
-            Canvas.SetLeft(_snakeParts[0].snakeShape, _snakeParts[0].position.X);
-            Canvas.SetTop(_snakeParts[0].snakeShape, _snakeParts[0].position.Y);
         }
     }
 }
