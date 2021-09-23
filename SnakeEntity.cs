@@ -10,14 +10,16 @@ using System.Windows.Shapes;
 
 namespace Snake {
     public class SnakeEntity {
+        // 蛇的部分
         private struct SnakePart {
             public UIElement snakeShape;
             public Point position;
         }
+        // 封装List，在每次对List进行操作时通知前端重绘
         private class SnakePartList {
             private Canvas _canvas;
             private List<SnakePart> _snakeParts = new List<SnakePart>();
-            public List<SnakePart> SnakeParts { get { return _snakeParts; } }
+            public IReadOnlyCollection<SnakePart> SnakeParts { get { return _snakeParts.AsReadOnly(); } }
             public SnakePartList(Canvas canvas) { _canvas = canvas; }
             public SnakePart this[int index] { get { return _snakeParts[index]; } }
             public int Count { get { return _snakeParts.Count; } }
@@ -58,8 +60,16 @@ namespace Snake {
             Right,
             Down,
         }
+        // 蛇的方向
         public SnakeDirection Direction { get; set; } = SnakeDirection.Right;
+        // 蛇头部的位置
         public Point HeadPosition { get { return _snakeParts[0].position; } }
+        // 蛇身子的位置
+        public IEnumerable<Point> BodyPositions {
+            get {
+                return _snakeParts.SnakeParts.Skip(1).Select(t => t.position);
+            }
+        }
 
         private readonly GameField _gameField;
         private readonly Canvas _canvas;
