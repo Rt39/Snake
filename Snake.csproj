@@ -58,9 +58,11 @@
     <Compile Include="Entities\Brick.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Food.cs" />
+    <Compile Include="Entities\SnakeParts.cs" />
     <Compile Include="GameControl.cs" />
     <Compile Include="StaticUtils.cs" />
     <Compile Include="SnakeEntity.cs" />
+    <Compile Include="View\RedrawEventArgs.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

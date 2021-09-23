@@ -11,9 +11,9 @@ namespace Snake.Entities {
         private Brush _brush;
         public Brush Brush { get { return _brush; } }
 
-        public Brick(int X, int Y, Brush brush) {
-            this.X = X;
-            this.Y = Y;
+        public Brick(int horizentalCount, int verticalCount, Brush brush) {
+            this._horizentalCount = horizentalCount;
+            this._verticalCount = verticalCount;
             _brush = brush;
             this.Shape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = brush };
         }

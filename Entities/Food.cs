@@ -13,8 +13,8 @@ namespace Snake.Entities {
         public Brush Brush { get { return _brush; } }
 
         public Food(int X, int Y, Brush brush) {
-            this.X = X;
-            this.Y = Y;
+            this._horizentalCount = X;
+            this._verticalCount = Y;
             _brush = brush;
             this.Shape = new Ellipse() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = brush };
         }

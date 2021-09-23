@@ -7,13 +7,18 @@ using System.Windows;
 
 namespace Snake.Entities {
     public abstract class Entity {
-        public int X { get; set; }
-        public int Y { get; set; }
+        protected int _horizentalCount;
+        public int HorizentalCount { get { return _horizentalCount; } }
+        protected int _verticalCount;
+        public int VerticalCount { get { return _verticalCount; } }
+
+        public int X { get { return HorizentalCount * StaticUtils.gridSize; } }
+        public int Y { get { return VerticalCount * StaticUtils.gridSize; } }
 
         private Point? _position = null;
         public Point Position {
             get {
-                return (Point)(_position == null ? (_position = new Point(X * StaticUtils.gridSize, Y * StaticUtils.gridSize)) : _position);
+                return (Point)(_position == null ? (_position = new Point(HorizentalCount * StaticUtils.gridSize, VerticalCount * StaticUtils.gridSize)) : _position);
             }
         }
 

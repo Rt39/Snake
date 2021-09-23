@@ -29,16 +29,23 @@ namespace Snake {
             _snakeEntity = snakeEntity;
             _bricks = bricks;
             _timer.Interval = StaticUtils.interval;
-            _timer.Elapsed += delegate (object o, ElapsedEventArgs e) {
-                _canvas.Dispatcher.Invoke(new Action(() =>
-                _snakeEntity.MoveSnake(EatFood())));
-                //GenerateFood();
-                if (IsGameOver()) Debug.WriteLine("true");
-            };
+            _timer.Elapsed += _timer_Tick;
             GenerateFood();
         }
 
         public void StartTick() { _timer.Start(); }
+
+        private void _timer_Tick(object o,ElapsedEventArgs e)
+        {
+            _canvas.Dispatcher.Invoke(new Action(() =>
+            {
+                _snakeEntity.MoveSnake(EatFood());
+            }));
+            if (IsGameOver()) {
+                _timer.Stop();
+                MessageBox.Show("你死了");
+            }
+        }
 
         private bool IsGameOver() {
             foreach (var b in _bricks)
