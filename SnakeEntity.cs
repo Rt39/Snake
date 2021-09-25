@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Snake.Controllers;
 
 namespace Snake {
     public class SnakeEntity {
@@ -71,29 +72,29 @@ namespace Snake {
             }
         }
 
-        private readonly GameField _gameField;
+        private readonly BackgroundGridController _gameField;
         private readonly Canvas _canvas;
         private readonly SnakePartList _snakeParts;
 
-        public SnakeEntity(Canvas canvas, GameField gameField) {
+        public SnakeEntity(Canvas canvas, BackgroundGridController gameField) {
             _canvas = canvas;
             _gameField = gameField;
             _snakeParts = new SnakePartList(canvas);
         }
 
         public void InitialSnake(int initialcount) {
-            int y = _gameField.HeightGridCount / 2 * StaticUtils.gridSize;
-            int headx = StaticUtils.gridSize * (initialcount + 1);
+            int y = _gameField.HeightGridCount / 2 * GameEnvironment.gridSize;
+            int headx = GameEnvironment.gridSize * (initialcount + 1);
             _snakeParts.Add(new SnakePart()
             {
                 position = new Point(headx, y),
-                snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Red }
+                snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
             });
             for (int i = 1; i <= initialcount; ++i)
                 _snakeParts.Add(new SnakePart()
                 {
-                    position = new Point(headx - i * StaticUtils.gridSize, y),
-                    snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Green }
+                    position = new Point(headx - i * GameEnvironment.gridSize, y),
+                    snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Green }
                 });
         }
 
@@ -112,29 +113,29 @@ namespace Snake {
                     _snakeParts.Insert(0, new SnakePart()
                     {
                         // Wrap
-                        position = new Point((headPoint.X + _gameField.WidthTotal - StaticUtils.gridSize) % _gameField.WidthTotal, headPoint.Y),
-                        snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Red }
+                        position = new Point((headPoint.X + _gameField.WidthTotal - GameEnvironment.gridSize) % _gameField.WidthTotal, headPoint.Y),
+                        snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
                     });
                     break;
                 case SnakeDirection.Down:
                     _snakeParts.Insert(0, new SnakePart()
                     {
-                        position = new Point(headPoint.X, (headPoint.Y + StaticUtils.gridSize) % _gameField.HeightTotal),
-                        snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Red }
+                        position = new Point(headPoint.X, (headPoint.Y + GameEnvironment.gridSize) % _gameField.HeightTotal),
+                        snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
                     });
                     break;
                 case SnakeDirection.Right:
                     _snakeParts.Insert(0, new SnakePart()
                     {
-                        position = new Point((headPoint.X + StaticUtils.gridSize) % _gameField.WidthTotal, headPoint.Y),
-                        snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Red }
+                        position = new Point((headPoint.X + GameEnvironment.gridSize) % _gameField.WidthTotal, headPoint.Y),
+                        snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
                     });
                     break;
                 case SnakeDirection.Up:
                     _snakeParts.Insert(0, new SnakePart()
                     {
-                        position = new Point(headPoint.X, (headPoint.Y + _gameField.HeightTotal - StaticUtils.gridSize) % _gameField.HeightTotal),
-                        snakeShape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = Brushes.Red }
+                        position = new Point(headPoint.X, (headPoint.Y + _gameField.HeightTotal - GameEnvironment.gridSize) % _gameField.HeightTotal),
+                        snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
                     });
                     break;
             }

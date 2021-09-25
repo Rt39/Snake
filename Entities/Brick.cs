@@ -7,15 +7,23 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Snake.Entities {
-    public class Brick : Entity {
-        private Brush _brush;
-        public Brush Brush { get { return _brush; } }
-
-        public Brick(int horizentalCount, int verticalCount, Brush brush) {
-            this._horizentalCount = horizentalCount;
-            this._verticalCount = verticalCount;
-            _brush = brush;
-            this.Shape = new Rectangle() { Width = StaticUtils.gridSize, Height = StaticUtils.gridSize, Fill = brush };
-        }
+    public class Brick : AbstructEntity {
+        public Brick(
+            int horizentalCount,
+            int verticalCount,
+            Brush fill,
+            Brush stroke,
+            double strokeThickness
+            ) :
+            base(
+                horizentalCount,
+                verticalCount,
+                fill,
+                stroke,
+                strokeThickness,
+                new RectangleGeometry(
+                    new System.Windows.Rect(0, 0, GameEnvironment.gridSize, GameEnvironment.gridSize)
+                    )
+                ) { }
     }
 }

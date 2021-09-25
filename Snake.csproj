@@ -55,14 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controllers\AbstructController.cs" />
+    <Compile Include="Controllers\SnakeControl.cs" />
+    <Compile Include="Entities\BackgroundGrid.cs" />
     <Compile Include="Entities\Brick.cs" />
-    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\AbstructEntity.cs" />
     <Compile Include="Entities\Food.cs" />
     <Compile Include="Entities\SnakeParts.cs" />
     <Compile Include="GameControl.cs" />
-    <Compile Include="StaticUtils.cs" />
+    <Compile Include="GameEnvironment.cs" />
     <Compile Include="SnakeEntity.cs" />
-    <Compile Include="View\RedrawEventArgs.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -71,7 +73,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GameField.cs" />
+    <Compile Include="Controllers\BackgroundGridController.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

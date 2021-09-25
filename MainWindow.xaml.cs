@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,32 +13,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Snake.Controllers;
+using Snake.Entities;
 
 namespace Snake {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        private GameField _gameField;
+        public ObservableCollection<AbstructEntity> Entities { get; set; } = new ObservableCollection<AbstructEntity>();
+
+        private BackgroundGridController _gameField;
         private SnakeEntity _snakeEntity;
         private GameControl _gameControl;
 
         public MainWindow() {
             InitializeComponent();
-            _gameField = new GameField(
-                gameField,
+            DataContext = this;
+
+            _gameField = new BackgroundGridController(
+                Entities,
                 33,
                 16,
                 Brushes.White,
                 Brushes.Gray
                 );
-            _gameField.DrawGameField();
+            _gameField.GenerateBackgroundGrid();
 
-            _snakeEntity = new SnakeEntity(gameField, _gameField);
-            _snakeEntity.InitialSnake(4);
+            //_snakeEntity = new SnakeEntity(gameField, _gameField);
+            //_snakeEntity.InitialSnake(4);
 
-            _gameControl = new GameControl(gameField, _gameField, _snakeEntity, new List<Entities.Brick>());
-            _gameControl.StartTick();
+            //_gameControl = new GameControl(gameField, _gameField, _snakeEntity, new List<Entities.Brick>());
+            //_gameControl.StartTick();
         }
 
         private void ChangeDirection(object sender, KeyEventArgs e) {
