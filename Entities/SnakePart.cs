@@ -1,42 +1,42 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Snake.Entities {
-    public class Food : AbstructEntity {
-        public Food(
+    public class SnakePart : AbstructEntity {
+        public SnakePart(
             uint row,
             uint column,
             Brush fill,
             Brush stroke,
             double strokeThickness
-            ) : base(
+            ) :
+            base(
                 row,
                 column,
                 fill,
                 stroke,
                 strokeThickness,
-                new EllipseGeometry(
-                    new Rect(0, 0, GameEnvironment.gridSize, GameEnvironment.gridSize)
+                new RectangleGeometry(
+                    new System.Windows.Rect(0, 0, GameEnvironment.gridSize, GameEnvironment.gridSize)
                     )
                 ) { }
-        public Food(
+        public SnakePart(
             GridPosition position,
             Brush fill,
             Brush stroke,
             double strokeThickness
-            ) : base(
+            ) :
+            base(
                 position,
                 fill,
                 stroke,
                 strokeThickness,
-                new EllipseGeometry(
-                    new Rect(0, 0, GameEnvironment.gridSize, GameEnvironment.gridSize)
+                new RectangleGeometry(
+                    new System.Windows.Rect(0, 0, GameEnvironment.gridSize, GameEnvironment.gridSize)
                     )
                 ) { }
     }

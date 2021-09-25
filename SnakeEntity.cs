@@ -27,8 +27,7 @@ namespace Snake {
 
             public void Insert(int index, SnakePart item) {
                 _snakeParts.Insert(index, item);
-                _canvas.Dispatcher.BeginInvoke(new Action(() =>
-                {
+                _canvas.Dispatcher.BeginInvoke(new Action(() => {
                     _canvas.Children.Add(item.snakeShape);
                     Canvas.SetLeft(item.snakeShape, item.position.X);
                     Canvas.SetTop(item.snakeShape, item.position.Y);
@@ -37,16 +36,14 @@ namespace Snake {
             }
             public void Add(SnakePart item) {
                 _snakeParts.Add(item);
-                _canvas.Dispatcher.BeginInvoke(new Action(() =>
-                {
+                _canvas.Dispatcher.BeginInvoke(new Action(() => {
                     _canvas.Children.Add(item.snakeShape);
                     Canvas.SetLeft(item.snakeShape, item.position.X);
                     Canvas.SetTop(item.snakeShape, item.position.Y);
                 }));
             }
             public void RemoveAt(int index) {
-                _canvas.Dispatcher.Invoke(new Action(() =>
-                {
+                _canvas.Dispatcher.Invoke(new Action(() => {
                     _canvas.Children.Remove(_snakeParts[index].snakeShape);
                     Canvas.SetLeft(_snakeParts[index].snakeShape, _snakeParts[index].position.X);
                     Canvas.SetTop(_snakeParts[index].snakeShape, _snakeParts[index].position.Y);
@@ -82,21 +79,21 @@ namespace Snake {
             _snakeParts = new SnakePartList(canvas);
         }
 
-        public void InitialSnake(int initialcount) {
-            int y = _gameField.HeightGridCount / 2 * GameEnvironment.gridSize;
-            int headx = GameEnvironment.gridSize * (initialcount + 1);
-            _snakeParts.Add(new SnakePart()
-            {
-                position = new Point(headx, y),
-                snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
-            });
-            for (int i = 1; i <= initialcount; ++i)
-                _snakeParts.Add(new SnakePart()
-                {
-                    position = new Point(headx - i * GameEnvironment.gridSize, y),
-                    snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Green }
-                });
-        }
+        //public void InitialSnake(int initialcount) {
+        //    int y = _gameField.RowGridCount / 2 * GameEnvironment.gridSize;
+        //    int headx = GameEnvironment.gridSize * (initialcount + 1);
+        //    _snakeParts.Add(new SnakePart()
+        //    {
+        //        position = new Point(headx, y),
+        //        snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
+        //    });
+        //    for (int i = 1; i <= initialcount; ++i)
+        //        _snakeParts.Add(new SnakePart()
+        //        {
+        //            position = new Point(headx - i * GameEnvironment.gridSize, y),
+        //            snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Green }
+        //        });
+        //}
 
         public void MoveSnake(bool eat) {
             if (!eat) {

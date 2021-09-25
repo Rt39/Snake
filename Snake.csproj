@@ -56,12 +56,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controllers\AbstructController.cs" />
-    <Compile Include="Controllers\SnakeControl.cs" />
+    <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\SnakeController.cs" />
     <Compile Include="Entities\BackgroundGrid.cs" />
     <Compile Include="Entities\Brick.cs" />
     <Compile Include="Entities\AbstructEntity.cs" />
     <Compile Include="Entities\Food.cs" />
-    <Compile Include="Entities\SnakeParts.cs" />
+    <Compile Include="Entities\GridPosition.cs" />
+    <Compile Include="Entities\SnakePart.cs" />
     <Compile Include="GameControl.cs" />
     <Compile Include="GameEnvironment.cs" />
     <Compile Include="SnakeEntity.cs" />
@@ -108,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dao\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -33,8 +33,8 @@ namespace Snake {
 
             _gameField = new BackgroundGridController(
                 Entities,
-                33,
                 16,
+                32,
                 Brushes.White,
                 Brushes.Gray
                 );
