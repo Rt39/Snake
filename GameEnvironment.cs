@@ -11,5 +11,7 @@ namespace Snake {
         public static int interval = 200;
         public static uint rowCount = 16;
         public static uint columnCount = 32;
+        public static double GameWidth { get { return columnCount * gridSize; } }
+        public static double GameHeight { get { return rowCount * gridSize; } }
     }
 }

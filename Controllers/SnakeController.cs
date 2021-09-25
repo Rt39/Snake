@@ -44,7 +44,7 @@ namespace Snake.Controllers {
         /// </summary>
         public SnakeDirection Direction { get; set; }
 
-        public SnakeController(Collection<AbstructEntity> entities, Brush headBrush, Brush bodyBrush, int initialBodyCount, GridPosition initialHeadPosition, SnakeDirection direction) {
+        public SnakeController(ICollection<AbstructEntity> entities, Brush headBrush, Brush bodyBrush, int initialBodyCount, GridPosition initialHeadPosition, SnakeDirection direction) {
             _entities = entities;
             _snakeBody = new List<SnakePart>();
             _headBrush = headBrush;
@@ -64,22 +64,25 @@ namespace Snake.Controllers {
             for (uint i = 1; i <= _initialBodyCount; ++i) {
                 switch (Direction) {
                     case SnakeDirection.Left:
-                        _snakeBody.Add(new SnakePart(_initialHeadPosition.row, _initialHeadPosition.column + i, _bodyBrush, null, 0));
+                        _snakeBody.Add(new SnakePart(_initialHeadPosition.row,
+                            (_initialHeadPosition.column + i) % GameEnvironment.columnCount,
+                        _bodyBrush, null, 0));
                         break;
                     case SnakeDirection.Up:
-                        _snakeBody.Add(new SnakePart(_initialHeadPosition.row + i, _initialHeadPosition.column, _bodyBrush, null, 0));
+                        _snakeBody.Add(new SnakePart((_initialHeadPosition.row + i) % GameEnvironment.rowCount, _initialHeadPosition.column, _bodyBrush, null, 0));
                         break;
                     case SnakeDirection.Right:
-                        _snakeBody.Add(new SnakePart(_initialHeadPosition.row, _initialHeadPosition.column - i, _bodyBrush, null, 0));
+                        _snakeBody.Add(new SnakePart(_initialHeadPosition.row, (_initialHeadPosition.column + GameEnvironment.columnCount - i) % GameEnvironment.columnCount, _bodyBrush, null, 0));
                         break;
                     case SnakeDirection.Down:
-                        _snakeBody.Add(new SnakePart(_initialHeadPosition.row - i, _initialHeadPosition.column, _bodyBrush, null, 0));
+                        _snakeBody.Add(new SnakePart((_initialHeadPosition.row + GameEnvironment.rowCount - i) % GameEnvironment.rowCount, _initialHeadPosition.column, _bodyBrush, null, 0));
                         break;
                 }
             }
             foreach (SnakePart s in _snakeBody)
                 _entities.Add(s);
         }
+
         /// <summary>
         /// 移动蛇
         /// </summary>
@@ -99,16 +102,16 @@ namespace Snake.Controllers {
             _entities.Remove(_snakeHead);
             switch (Direction) {
                 case SnakeDirection.Left:
-                    _snakeHead = new SnakePart(_snakeHead.Row, _snakeHead.Column - 1, _headBrush, null, 0);
+                    _snakeHead = new SnakePart(_snakeHead.Row, (_snakeHead.Column + GameEnvironment.columnCount - 1) % GameEnvironment.columnCount, _headBrush, null, 0);
                     break;
                 case SnakeDirection.Up:
-                    _snakeHead = new SnakePart(_snakeHead.Row - 1, _snakeHead.Column, _headBrush, null, 0);
+                    _snakeHead = new SnakePart((_snakeHead.Row + GameEnvironment.rowCount - 1) % GameEnvironment.rowCount, _snakeHead.Column, _headBrush, null, 0);
                     break;
                 case SnakeDirection.Right:
-                    _snakeHead = new SnakePart(_snakeHead.Row, _snakeHead.Column + 1, _headBrush, null, 0);
+                    _snakeHead = new SnakePart(_snakeHead.Row, (_snakeHead.Column + 1) % GameEnvironment.columnCount, _headBrush, null, 0);
                     break;
                 case SnakeDirection.Down:
-                    _snakeHead = new SnakePart(_snakeHead.Row + 1, _snakeHead.Column, _headBrush, null, 0);
+                    _snakeHead = new SnakePart((_snakeHead.Row + 1) % GameEnvironment.rowCount, _snakeHead.Column, _headBrush, null, 0);
                     break;
             }
             _entities.Add(_snakeHead);

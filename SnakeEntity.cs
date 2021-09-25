@@ -95,47 +95,47 @@ namespace Snake {
         //        });
         //}
 
-        public void MoveSnake(bool eat) {
-            if (!eat) {
-                // 删除蛇尾
-                _snakeParts.RemoveAt(_snakeParts.Count - 1);
-            }
-            // 将蛇头改为绿色
-            ((Rectangle)_snakeParts[0].snakeShape).Fill = Brushes.Green;
+        //public void MoveSnake(bool eat) {
+        //    if (!eat) {
+        //        // 删除蛇尾
+        //        _snakeParts.RemoveAt(_snakeParts.Count - 1);
+        //    }
+        //    // 将蛇头改为绿色
+        //    ((Rectangle)_snakeParts[0].snakeShape).Fill = Brushes.Green;
 
-            // 添加蛇头
-            Point headPoint = _snakeParts[0].position;
-            switch (Direction) {
-                case SnakeDirection.Left:
-                    _snakeParts.Insert(0, new SnakePart()
-                    {
-                        // Wrap
-                        position = new Point((headPoint.X + _gameField.WidthTotal - GameEnvironment.gridSize) % _gameField.WidthTotal, headPoint.Y),
-                        snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
-                    });
-                    break;
-                case SnakeDirection.Down:
-                    _snakeParts.Insert(0, new SnakePart()
-                    {
-                        position = new Point(headPoint.X, (headPoint.Y + GameEnvironment.gridSize) % _gameField.HeightTotal),
-                        snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
-                    });
-                    break;
-                case SnakeDirection.Right:
-                    _snakeParts.Insert(0, new SnakePart()
-                    {
-                        position = new Point((headPoint.X + GameEnvironment.gridSize) % _gameField.WidthTotal, headPoint.Y),
-                        snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
-                    });
-                    break;
-                case SnakeDirection.Up:
-                    _snakeParts.Insert(0, new SnakePart()
-                    {
-                        position = new Point(headPoint.X, (headPoint.Y + _gameField.HeightTotal - GameEnvironment.gridSize) % _gameField.HeightTotal),
-                        snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
-                    });
-                    break;
-            }
-        }
+        //    // 添加蛇头
+        //    Point headPoint = _snakeParts[0].position;
+        //    switch (Direction) {
+        //        case SnakeDirection.Left:
+        //            _snakeParts.Insert(0, new SnakePart()
+        //            {
+        //                // Wrap
+        //                position = new Point((headPoint.X + _gameField.WidthTotal - GameEnvironment.gridSize) % _gameField.WidthTotal, headPoint.Y),
+        //                snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
+        //            });
+        //            break;
+        //        case SnakeDirection.Down:
+        //            _snakeParts.Insert(0, new SnakePart()
+        //            {
+        //                position = new Point(headPoint.X, (headPoint.Y + GameEnvironment.gridSize) % _gameField.HeightTotal),
+        //                snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
+        //            });
+        //            break;
+        //        case SnakeDirection.Right:
+        //            _snakeParts.Insert(0, new SnakePart()
+        //            {
+        //                position = new Point((headPoint.X + GameEnvironment.gridSize) % _gameField.WidthTotal, headPoint.Y),
+        //                snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
+        //            });
+        //            break;
+        //        case SnakeDirection.Up:
+        //            _snakeParts.Insert(0, new SnakePart()
+        //            {
+        //                position = new Point(headPoint.X, (headPoint.Y + _gameField.HeightTotal - GameEnvironment.gridSize) % _gameField.HeightTotal),
+        //                snakeShape = new Rectangle() { Width = GameEnvironment.gridSize, Height = GameEnvironment.gridSize, Fill = Brushes.Red }
+        //            });
+        //            break;
+        //    }
+        //}
     }
 }
