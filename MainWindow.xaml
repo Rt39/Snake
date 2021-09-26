@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snake"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" KeyUp="ChangeDirection">
+        Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ItemsControl ItemsSource="{Binding Entities}">
+        <ItemsControl ItemsSource="{Binding Entities, UpdateSourceTrigger=PropertyChanged}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas ClipToBounds="True"/>

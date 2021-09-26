@@ -1,7 +1,8 @@
-﻿using Snake.Entities;
+using Snake.Entities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,7 +62,7 @@ namespace Snake.Controllers {
             _snakeHead = new SnakePart(_initialHeadPosition, _headBrush, null, 0);
             _entities.Add(_snakeHead);
             // 根据蛇的朝向添加蛇身子
-            for (uint i = 1; i <= _initialBodyCount; ++i) {
+            for (uint i = (uint)_initialBodyCount; i > 0; --i) {
                 switch (Direction) {
                     case SnakeDirection.Left:
                         _snakeBody.Add(new SnakePart(_initialHeadPosition.row,
@@ -88,9 +89,10 @@ namespace Snake.Controllers {
         /// </summary>
         /// <param name="eat">是否吃到食物（删除蛇尾）</param>
         public void MoveSnake(bool eat) {
+            Debug.WriteLine(_snakeBody.Count);
             if (!eat) {
                 // 没有吃到食物，删除蛇尾
-                SnakePart snakeTail = _snakeBody[_snakeBody.Count - 1];
+                SnakePart snakeTail = _snakeBody[0];
                 _snakeBody.Remove(snakeTail);
                 _entities.Remove(snakeTail);
             }

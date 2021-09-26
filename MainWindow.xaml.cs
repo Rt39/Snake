@@ -23,20 +23,27 @@ namespace Snake {
     public partial class MainWindow : Window {
         public ObservableCollection<AbstructEntity> Entities { get; set; } = new ObservableCollection<AbstructEntity>();
 
-        private BackgroundGridController _gameField;
-        private SnakeEntity _snakeEntity;
-        private GameControl _gameControl;
+        //private BackgroundGridController _gameField;
+        //private SnakeEntity _snakeEntity;
+        //private GameControl _gameControl;
+
+        private GameController _gameController;
 
         public MainWindow() {
             InitializeComponent();
             DataContext = this;
 
-            _gameField = new BackgroundGridController(
-                Entities,
-                Brushes.White,
-                Brushes.Gray
-                );
-            _gameField.GenerateBackgroundGrid();
+            _gameController = new GameController(Entities);
+
+            //BindingOperations.EnableCollectionSynchronization(Entities, new object());
+            Loaded += delegate { _gameController.InitialGame(); };
+
+            //_gameField = new BackgroundGridController(
+            //    Entities,
+            //    Brushes.White,
+            //    Brushes.Gray
+            //    );
+            //_gameField.GenerateBackgroundGrid();
 
             //_snakeEntity = new SnakeEntity(gameField, _gameField);
             //_snakeEntity.InitialSnake(4);
@@ -45,25 +52,25 @@ namespace Snake {
             //_gameControl.StartTick();
         }
 
-        private void ChangeDirection(object sender, KeyEventArgs e) {
-            switch (e.Key) {
-                case Key.Left:
-                    if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Left && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Right)
-                        _snakeEntity.Direction = SnakeEntity.SnakeDirection.Left;
-                    break;
-                case Key.Up:
-                    if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Up && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Down)
-                        _snakeEntity.Direction = SnakeEntity.SnakeDirection.Up;
-                    break;
-                case Key.Right:
-                    if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Left && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Right)
-                        _snakeEntity.Direction = SnakeEntity.SnakeDirection.Right;
-                    break;
-                case Key.Down:
-                    if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Up && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Down)
-                        _snakeEntity.Direction = SnakeEntity.SnakeDirection.Down;
-                    break;
-            }
-        }
+        //private void ChangeDirection(object sender, KeyEventArgs e) {
+        //    switch (e.Key) {
+        //        case Key.Left:
+        //            if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Left && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Right)
+        //                _snakeEntity.Direction = SnakeEntity.SnakeDirection.Left;
+        //            break;
+        //        case Key.Up:
+        //            if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Up && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Down)
+        //                _snakeEntity.Direction = SnakeEntity.SnakeDirection.Up;
+        //            break;
+        //        case Key.Right:
+        //            if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Left && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Right)
+        //                _snakeEntity.Direction = SnakeEntity.SnakeDirection.Right;
+        //            break;
+        //        case Key.Down:
+        //            if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Up && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Down)
+        //                _snakeEntity.Direction = SnakeEntity.SnakeDirection.Down;
+        //            break;
+        //    }
+        //}
     }
 }

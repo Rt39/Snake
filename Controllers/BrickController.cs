@@ -1,4 +1,4 @@
-﻿using Snake.Entities;
+using Snake.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +10,19 @@ namespace Snake.Controllers {
     public class BrickController : AbstructController {
         private readonly IEnumerable<GridPosition> _brickPositions;
         private readonly Brush _brickBrush;
-        public BrickController(ICollection<AbstructEntity> entities, IEnumerable<GridPosition> brickPositions, Brush brickBrush) {
+        private readonly Brush _brickStroke;
+        private readonly double _strokeThickness;
+
+        public BrickController(ICollection<AbstructEntity> entities, IEnumerable<GridPosition> brickPositions, Brush brickBrush, Brush brickStroke, double strokeThickness) {
             _entities = entities;
             _brickPositions = brickPositions;
             _brickBrush = brickBrush;
+            _brickStroke = brickStroke;
+            _strokeThickness = strokeThickness;
         }
         public void GenerateBricks() {
-
+            foreach (GridPosition p in _brickPositions)
+                _entities.Add(new Brick(p, _brickBrush, _brickStroke, _strokeThickness));
         }
     }
 }

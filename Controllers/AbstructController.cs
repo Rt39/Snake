@@ -1,4 +1,4 @@
-﻿using Snake.Entities;
+using Snake.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +11,6 @@ namespace Snake.Controllers {
         /// 场景中的所有实体
         /// </summary>
         protected ICollection<AbstructEntity> _entities;
+
     }
 }
