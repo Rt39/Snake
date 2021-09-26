@@ -68,9 +68,7 @@
     <Compile Include="Entities\Food.cs" />
     <Compile Include="Entities\GridPosition.cs" />
     <Compile Include="Entities\SnakePart.cs" />
-    <Compile Include="GameControl.cs" />
     <Compile Include="GameEnvironment.cs" />
-    <Compile Include="SnakeEntity.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
