@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace Snake {
         private class SnakePartList {
             private Canvas _canvas;
             private List<SnakePart> _snakeParts = new List<SnakePart>();
-            public IReadOnlyCollection<SnakePart> SnakeParts { get { return _snakeParts.AsReadOnly(); } }
+            public ReadOnlyCollection<SnakePart> SnakeParts { get { return _snakeParts.AsReadOnly(); } }
             public SnakePartList(Canvas canvas) { _canvas = canvas; }
             public SnakePart this[int index] { get { return _snakeParts[index]; } }
             public int Count { get { return _snakeParts.Count; } }

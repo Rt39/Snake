@@ -24,5 +24,12 @@ namespace Snake {
         public static GridPosition initialSnakeHead = new GridPosition(7, 10);
         public static SnakeController.SnakeDirection initialDirection = SnakeController.SnakeDirection.Right;
         public static int initialBodyCount = 3;
+        public static Brush foodBrush = Brushes.Yellow;
+        public static Brush foodStroke = null;
+        public static double foodStrokeThickness = 0;
+        public static List<GridPosition> brickPositions = new List<GridPosition>();
+        public static Brush brickBrush = Brushes.AliceBlue;
+        public static Brush brickStroke = null;
+        public static double brickStrokeThickness = 0;
     }
 }

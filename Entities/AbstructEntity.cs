@@ -47,6 +47,9 @@ namespace Snake.Entities {
             _stroke = stroke;
             _strokeThickness = strokeThickness;
             _shape = shape;
+            _fill.Freeze();
+            if (_stroke != null) _stroke.Freeze();
+            _shape.Freeze();
         }
         public AbstructEntity(uint row, uint column, Brush fill, Brush stroke, double strokeThickness, Geometry shape) : this(new GridPosition(row, column), fill, stroke, strokeThickness, shape) { }
         #endregion

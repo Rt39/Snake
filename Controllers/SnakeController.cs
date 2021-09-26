@@ -25,15 +25,15 @@ namespace Snake.Controllers {
         /// <summary>
         /// 所有蛇身的位置
         /// </summary>
-        public IEnumerable<Point> SnakeBodyPositions {
+        public IEnumerable<GridPosition> SnakeBodyPositions {
             get {
-                return _snakeBody.Select(e => e.Position);
+                return _snakeBody.Select(e => e.GridPos);
             }
         }
         /// <summary>
         /// 蛇头的位置
         /// </summary>
-        public Point SnakeHeadPosition { get { return _snakeHead.Position; } }
+        public GridPosition SnakeHeadPosition { get { return _snakeHead.GridPos; } }
 
         private readonly Brush _headBrush;
         private readonly Brush _bodyBrush;
@@ -87,21 +87,23 @@ namespace Snake.Controllers {
         /// <summary>
         /// 移动蛇
         /// </summary>
-        /// <param name="eat">是否吃到食物（删除蛇尾）</param>
-        public void MoveSnake(bool eat) {
-            Debug.WriteLine(_snakeBody.Count);
-            if (!eat) {
-                // 没有吃到食物，删除蛇尾
-                SnakePart snakeTail = _snakeBody[0];
-                _snakeBody.Remove(snakeTail);
-                _entities.Remove(snakeTail);
-            }
+        public void MoveSnake() {
+            // 没有吃到食物，删除蛇尾
+            SnakePart snakeTail = _snakeBody[0];
+            _snakeBody.Remove(snakeTail);
+            Application.Current.Dispatcher.Invoke(new Action(() => _entities.Remove(snakeTail)));
+            MoveSnakeRetainTail();
+        }
+        /// <summary>
+        /// 移动蛇，保留尾部一节
+        /// </summary>
+        public void MoveSnakeRetainTail() {
             // 添加一节头部身子
             SnakePart frontBody = new SnakePart(_snakeHead.GridPos, _bodyBrush, null, 0);
             _snakeBody.Add(frontBody);
-            _entities.Add(frontBody);
+            Application.Current.Dispatcher.Invoke(new Action(() => _entities.Add(frontBody)));
             // 更新蛇头位置
-            _entities.Remove(_snakeHead);
+            Application.Current.Dispatcher.Invoke(new Action(() => _entities.Remove(_snakeHead)));
             switch (Direction) {
                 case SnakeDirection.Left:
                     _snakeHead = new SnakePart(_snakeHead.Row, (_snakeHead.Column + GameEnvironment.columnCount - 1) % GameEnvironment.columnCount, _headBrush, null, 0);
@@ -116,7 +118,7 @@ namespace Snake.Controllers {
                     _snakeHead = new SnakePart((_snakeHead.Row + 1) % GameEnvironment.rowCount, _snakeHead.Column, _headBrush, null, 0);
                     break;
             }
-            _entities.Add(_snakeHead);
+            Application.Current.Dispatcher.Invoke(new Action(() => _entities.Add(_snakeHead)));
         }
     }
 }

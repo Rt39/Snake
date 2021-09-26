@@ -35,8 +35,10 @@ namespace Snake {
 
             _gameController = new GameController(Entities);
 
+            // .net framework 4.5新功能，不支持Windows XP
             //BindingOperations.EnableCollectionSynchronization(Entities, new object());
             Loaded += delegate { _gameController.InitialGame(); };
+            //Closing += delegate { _gameController.StopTimer(); };
 
             //_gameField = new BackgroundGridController(
             //    Entities,
@@ -52,25 +54,25 @@ namespace Snake {
             //_gameControl.StartTick();
         }
 
-        //private void ChangeDirection(object sender, KeyEventArgs e) {
-        //    switch (e.Key) {
-        //        case Key.Left:
-        //            if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Left && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Right)
-        //                _snakeEntity.Direction = SnakeEntity.SnakeDirection.Left;
-        //            break;
-        //        case Key.Up:
-        //            if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Up && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Down)
-        //                _snakeEntity.Direction = SnakeEntity.SnakeDirection.Up;
-        //            break;
-        //        case Key.Right:
-        //            if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Left && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Right)
-        //                _snakeEntity.Direction = SnakeEntity.SnakeDirection.Right;
-        //            break;
-        //        case Key.Down:
-        //            if (_snakeEntity.Direction != SnakeEntity.SnakeDirection.Up && _snakeEntity.Direction != SnakeEntity.SnakeDirection.Down)
-        //                _snakeEntity.Direction = SnakeEntity.SnakeDirection.Down;
-        //            break;
-        //    }
-        //}
+        private void ChangeDirection(object sender, KeyEventArgs e) {
+            switch (e.Key) {
+                case Key.Left:
+                    if (_gameController.Direction != SnakeController.SnakeDirection.Left && _gameController.Direction != SnakeController.SnakeDirection.Right)
+                        _gameController.Direction = SnakeController.SnakeDirection.Left;
+                    break;
+                case Key.Up:
+                    if (_gameController.Direction != SnakeController.SnakeDirection.Up && _gameController.Direction != SnakeController.SnakeDirection.Down)
+                        _gameController.Direction = SnakeController.SnakeDirection.Up;
+                    break;
+                case Key.Right:
+                    if (_gameController.Direction != SnakeController.SnakeDirection.Left && _gameController.Direction != SnakeController.SnakeDirection.Right)
+                        _gameController.Direction = SnakeController.SnakeDirection.Right;
+                    break;
+                case Key.Down:
+                    if (_gameController.Direction != SnakeController.SnakeDirection.Up && _gameController.Direction != SnakeController.SnakeDirection.Down)
+                        _gameController.Direction = SnakeController.SnakeDirection.Down;
+                    break;
+            }
+        }
     }
 }

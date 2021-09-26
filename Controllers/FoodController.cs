@@ -10,6 +10,8 @@ namespace Snake.Controllers {
     public class FoodController : AbstructController {
         private Food _food = null;
 
+        public GridPosition FoodPosition { get { return _food.GridPos; } }
+
         private readonly Brush _foodBrush;
         private readonly Brush _foodStrokeBrush;
         private readonly double _strokeThickness;
@@ -22,10 +24,15 @@ namespace Snake.Controllers {
 
         public void GenerateFood(IEnumerable<GridPosition> forbiddenGridPossions) {
             if (_food != null)
-                _entities.Remove(_food);
-            uint row;
-            uint column;
-
+                System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => _entities.Remove(_food)));
+            GridPosition p;
+            do {
+                uint row = (uint)GameEnvironment.rand.Next((int)GameEnvironment.rowCount);
+                uint column = (uint)GameEnvironment.rand.Next((int)GameEnvironment.columnCount);
+                p = new GridPosition(row, column);
+            } while (forbiddenGridPossions.Contains(p));
+            _food = new Food(p, _foodBrush, _foodStrokeBrush, _strokeThickness);
+            System.Windows.Application.Current.Dispatcher.Invoke(new Action(() => _entities.Add(_food)));
         }
     }
 }

@@ -13,6 +13,8 @@ namespace Snake.Controllers {
         private readonly Brush _brickStroke;
         private readonly double _strokeThickness;
 
+        public IEnumerable<GridPosition> BrickPositions { get { return _brickPositions; } }
+
         public BrickController(ICollection<AbstructEntity> entities, IEnumerable<GridPosition> brickPositions, Brush brickBrush, Brush brickStroke, double strokeThickness) {
             _entities = entities;
             _brickPositions = brickPositions;
