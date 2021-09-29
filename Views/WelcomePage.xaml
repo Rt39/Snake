@@ -13,9 +13,10 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="贪吃蛇" FontFamily="Simsun" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="贪吃蛇" FontFamily="Simsun" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20"/>
             <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button FontFamily="Simsun" Content="开始游戏"/>
+                <Button FontFamily="Simsun" Content="新游戏"/>
+                <Button Content="载入"/>
                 <Button FontFamily="Simsun" Content="退出"/>
             </StackPanel>
         </Grid>

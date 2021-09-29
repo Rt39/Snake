@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Controllers\AbstructController.cs" />
     <Compile Include="Controllers\BrickController.cs" />
     <Compile Include="Controllers\FoodController.cs" />

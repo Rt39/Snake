@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snake"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" KeyUp="ChangeDirection">
+        Title="MainWindow" Height="450" Width="800"
+        Closing="Window_Closing"
+        >
     <Grid>
-        <Menu>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
             <MenuItem Header="文件(_F)">
                 <MenuItem Header="新游戏(_N)"/>
                 <MenuItem Header="打开地图(_O)"/>
@@ -15,10 +21,10 @@
                 <MenuItem Header="重新开始(_R)"/>
                 <MenuItem Header="保存(_S)" Command=""/>
                 <Separator/>
-                <MenuItem Header="退出(_E)"/>
+                <MenuItem Header="退出(_E)" Click="MenuItem_Click"/>
             </MenuItem>
         </Menu>
-        <ItemsControl ItemsSource="{Binding Entities, UpdateSourceTrigger=PropertyChanged}">
+        <!--<ItemsControl ItemsSource="{Binding Entities, UpdateSourceTrigger=PropertyChanged}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas ClipToBounds="True"/>
@@ -36,6 +42,7 @@
                   Stroke="{Binding Stroke}" StrokeThickness="{Binding StrokeThickness}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ItemsControl>-->
+        <Frame Grid.Row="1" Name="frame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

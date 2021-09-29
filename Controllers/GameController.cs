@@ -19,6 +19,8 @@ namespace Snake.Controllers {
         private readonly BrickController _brickController;
         private readonly FoodController _foodController;
 
+        public event EventHandler<EventArgs> GameOver;
+
         public IEnumerable<GridPosition> ForbiddenGridPosition {
             get {
                 return _snakeController.SnakeBodyPositions.Union(new List<GridPosition>() { _snakeController.SnakeHeadPosition }).Union(_brickController.BrickPositions);
@@ -40,6 +42,7 @@ namespace Snake.Controllers {
 
         public void InitialGame() {
             _backgroundGridController.GenerateBackgroundGrid();
+            _brickController.GenerateBricks();
             _snakeController.InitialSnake();
             _foodController.GenerateFood(ForbiddenGridPosition);
             _timer.Start();
@@ -56,6 +59,16 @@ namespace Snake.Controllers {
                 _foodController.GenerateFood(ForbiddenGridPosition);
             }
             else _snakeController.MoveSnake();
+            if (IsgameOver()) {
+                _timer.Stop();
+                _timer.Enabled = false;
+                // 发出游戏结束事件
+                GameOver(this, null);
+                return;
+            }
+            // 重置计时器时间
+            _timer.Stop();
+            _timer.Start();
         }
 
         private bool EatFood() {
@@ -63,7 +76,7 @@ namespace Snake.Controllers {
         }
 
         private bool IsgameOver() {
-            throw new NotImplementedException();
+            return _snakeController.SnakeBodyPositions.Union(_brickController.BrickPositions).Contains(_snakeController.SnakeHeadPosition);
         }
 
         public SnakeController.SnakeDirection Direction {
@@ -72,6 +85,8 @@ namespace Snake.Controllers {
             }
             set {
                 _snakeController.Direction = value;
+                if (_timer.Enabled)
+                    Timer_Elapsed(this, null);
             }
         }
     }
