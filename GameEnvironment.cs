@@ -19,14 +19,17 @@ namespace Snake {
 
         public static Brush grid1Brush = Brushes.Gray;
         public static Brush grid2Brush = Brushes.White;
+
         public static Brush snakeBodyBrush = Brushes.Green;
         public static Brush snakeHeadBrush = Brushes.Red;
         public static GridPosition initialSnakeHead = new GridPosition(7, 10);
         public static SnakeController.SnakeDirection initialDirection = SnakeController.SnakeDirection.Right;
         public static int initialBodyCount = 3;
+
         public static Brush foodBrush = Brushes.Yellow;
         public static Brush foodStroke = null;
         public static double foodStrokeThickness = 0;
+
         public static List<GridPosition> brickPositions = new List<GridPosition>() {
             new GridPosition(0,0),
             new GridPosition(1,0),

@@ -1,0 +1,165 @@
+﻿<Window x:Class="Snake.Views.NewGameEnvironmentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Snake.Views"
+        mc:Ignorable="d"
+        Title="NewGameEnvironmentView" Height="450" Width="500">
+    <ScrollViewer>
+        <StackPanel>
+            <GroupBox>
+                <GroupBox.Header>
+                    <Label>场景设置</Label>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Target="{Binding ElementName=tbx_row}">行数(_R)</Label>
+                    <TextBox Grid.Column="1" Name="tbx_row"/>
+                    <Label Grid.Row="1" Target="{Binding ElementName=tbx_column}">列数(_C)</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Name="tbx_column"/>
+                    <Label Grid.Row="2" Target="{Binding ElementName=tbx_size}">网格大小(_S)</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_size"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <Label>背景方格设置</Label>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Target="{Binding ElementName=btn_grid1Color}">背景方格1(_1)</Label>
+                    <Button Name="btn_grid1Color" Grid.Column="1" Click="Grid1Color_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Rectangle Fill="{Binding Grid1Fill}"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Label Grid.Row="1" Target="{Binding ElementName=btn_grid1Color}">背景方格2(_2)</Label>
+                    <Button Name="btn_grid2Color" Grid.Row="1" Grid.Column="1" Click="Grid1Color_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Rectangle Fill="{Binding Grid2Fill}"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <Label>蛇设置</Label>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Target="{Binding ElementName=btn_snakeBodyColor}">蛇身</Label>
+                    <Button Name="btn_snakeBodyColor" Grid.Column="1">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Rectangle Fill="{Binding SnakeBodyFill}"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Label Target="{Binding ElementName=btn_snakeHeadColor}" Grid.Row="1">蛇头</Label>
+                    <Button Name="btn_snakeHeadColor" Grid.Row="1" Grid.Column="1">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Rectangle Fill="{Binding SnakeHeadFill}"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <Label>食物设置</Label>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label>填充</Label>
+                    <Button Name="btn_foodFill" Grid.Column="1">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Rectangle Fill="{Binding FoodFill}"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Label Grid.Row="1">边框</Label>
+                    <Button Name="btn_foodStroke" Grid.Row="1" Grid.Column="1">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Rectangle Fill="{Binding FoodStroke}"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Label Grid.Row="2">边框粗细</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_foodStrokeThickness"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <Label>砖块设置</Label>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label>填充</Label>
+                    <Button Name="btn_brickFill" Grid.Column="1">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Rectangle Fill="{Binding BrickFill}"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Label Grid.Row="1">边框</Label>
+                    <Button Name="btn_brickStroke" Grid.Row="1" Grid.Column="1">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Rectangle Fill="{Binding BrickStroke}"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Label Grid.Row="2">边框粗细</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_brickStrokeThickness"/>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
