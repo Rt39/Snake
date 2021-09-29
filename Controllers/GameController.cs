@@ -21,7 +21,7 @@ namespace Snake.Controllers {
 
         public IEnumerable<GridPosition> ForbiddenGridPosition {
             get {
-                return _snakeController.SnakeBodyPositions.Append(_snakeController.SnakeHeadPosition).Union(_brickController.BrickPositions);
+                return _snakeController.SnakeBodyPositions.Union(new List<GridPosition>() { _snakeController.SnakeHeadPosition }).Union(_brickController.BrickPositions);
             }
         }
 

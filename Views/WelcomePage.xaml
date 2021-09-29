@@ -7,8 +7,17 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Welcome">
-
-    <Grid>
-
-    </Grid>
+    <Viewbox>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="贪吃蛇" FontFamily="Simsun" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <Button FontFamily="Simsun" Content="开始游戏"/>
+                <Button FontFamily="Simsun" Content="退出"/>
+            </StackPanel>
+        </Grid>
+    </Viewbox>
 </Page>
