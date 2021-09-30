@@ -91,7 +91,7 @@ namespace Snake.Controllers {
             // 没有吃到食物，删除蛇尾
             SnakePart snakeTail = _snakeBody[0];
             _snakeBody.Remove(snakeTail);
-            if (System.Windows.Application.Current == null) { new System.Windows.Application { ShutdownMode = ShutdownMode.OnExplicitShutdown }; }
+            //if (System.Windows.Application.Current == null) { new System.Windows.Application { ShutdownMode = ShutdownMode.OnExplicitShutdown }; }
             Application.Current.Dispatcher.Invoke(new Action(() => _entities.Remove(snakeTail)));
             MoveSnakeRetainTail();
         }
@@ -102,10 +102,10 @@ namespace Snake.Controllers {
             // 添加一节头部身子
             SnakePart frontBody = new SnakePart(_snakeHead.GridPos, _bodyBrush, null, 0);
             _snakeBody.Add(frontBody);
-            if (System.Windows.Application.Current == null) { new System.Windows.Application { ShutdownMode = ShutdownMode.OnExplicitShutdown }; }
+            //if (System.Windows.Application.Current == null) { new System.Windows.Application { ShutdownMode = ShutdownMode.OnExplicitShutdown }; }
             Application.Current.Dispatcher.Invoke(new Action(() => _entities.Add(frontBody)));
-            // 我不知道为什么要这样做
-            if (System.Windows.Application.Current == null) { new System.Windows.Application { ShutdownMode = ShutdownMode.OnExplicitShutdown }; }
+            //// 我不知道为什么要这样做
+            //if (System.Windows.Application.Current == null) { new System.Windows.Application { ShutdownMode = ShutdownMode.OnExplicitShutdown }; }
             Application.Current.Dispatcher.Invoke(new Action(() => _entities.Remove(_snakeHead)));
             // 更新蛇头位置
             switch (Direction) {
