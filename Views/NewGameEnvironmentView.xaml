@@ -5,7 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snake.Views"
         mc:Ignorable="d"
-        Title="NewGameEnvironmentView" Height="450" Width="500">
+        Title="NewGameEnvironmentView"
+        Height="450" Width="300">
+    <Window.Resources>
+        <ContextMenu x:Key="brushSettingMenu">
+            <MenuItem Header="纯色(_C)" Click="PureColorMenu_Click"/>
+            <MenuItem Header="图片(_P)" Click="PictureMenu_Click"/>
+        </ContextMenu>
+        <ControlTemplate x:Key="colorPickerTemplate" TargetType="{x:Type Button}">
+            <Border x:Name="buttonOuterBorder"
+                    Width="{Binding RelativeSource={RelativeSource Self},Path=ActualHeight}"
+                    BorderBrush="LightGray" BorderThickness="1">
+                <Border x:Name="buttonInnerBorder">
+                    <Rectangle Fill="{TemplateBinding Background}"/>
+                </Border>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter TargetName="buttonOuterBorder" Property="BorderBrush" Value="Orange"/>
+                    <!--<Setter TargetName="buttonOuterBorder" Property="BorderThickness" Value="1"/>-->
+                    <Setter TargetName="buttonInnerBorder" Property="BorderBrush" Value="Transparent"/>
+                    <Setter TargetName="buttonInnerBorder" Property="BorderThickness" Value="1"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
     <ScrollViewer>
         <StackPanel>
             <GroupBox>
@@ -21,13 +45,16 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Target="{Binding ElementName=tbx_row}">行数(_R)</Label>
-                    <TextBox Grid.Column="1" Name="tbx_row"/>
-                    <Label Grid.Row="1" Target="{Binding ElementName=tbx_column}">列数(_C)</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Name="tbx_column"/>
+                    <TextBox Grid.Column="1" Name="tbx_row" Text="{Binding Row}"/>
+                    <Label Grid.Row="1" Target="{Binding ElementName=tbx_column}">列数(_L)</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Name="tbx_column" Text="{Binding Column}"/>
                     <Label Grid.Row="2" Target="{Binding ElementName=tbx_size}">网格大小(_S)</Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_size"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_size" Text="{Binding GridSize}"/>
+                    <Label Grid.Row="3" Target="{Binding ElementName=tbx_timeInterval}">时钟间隔(_T)</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Name="tbx_timeInterval" Text="{Binding TimeInterval}"/>
                 </Grid>
             </GroupBox>
             <GroupBox>
@@ -44,20 +71,28 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Target="{Binding ElementName=btn_grid1Color}">背景方格1(_1)</Label>
-                    <Button Name="btn_grid1Color" Grid.Column="1" Click="Grid1Color_Click">
-                        <Button.Template>
+                    <Button Name="btn_grid1Color" 
+                            Grid.Column="1" 
+                            Click="BrushButton_Click"
+                            Background="{Binding Grid1Fill}" 
+                            Template="{StaticResource colorPickerTemplate}">
+                        <!--<Button.Template>
                             <ControlTemplate>
                                 <Rectangle Fill="{Binding Grid1Fill}"/>
                             </ControlTemplate>
-                        </Button.Template>
+                        </Button.Template>-->
                     </Button>
                     <Label Grid.Row="1" Target="{Binding ElementName=btn_grid1Color}">背景方格2(_2)</Label>
-                    <Button Name="btn_grid2Color" Grid.Row="1" Grid.Column="1" Click="Grid1Color_Click">
-                        <Button.Template>
+                    <Button Name="btn_grid2Color"
+                            Grid.Row="1" Grid.Column="1" 
+                            Click="BrushButton_Click" 
+                            Background="{Binding Grid2Fill}"
+                            Template="{StaticResource colorPickerTemplate}">
+                        <!--<Button.Template>
                             <ControlTemplate>
                                 <Rectangle Fill="{Binding Grid2Fill}"/>
                             </ControlTemplate>
-                        </Button.Template>
+                        </Button.Template>-->
                     </Button>
                 </Grid>
             </GroupBox>
@@ -74,21 +109,29 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label Target="{Binding ElementName=btn_snakeBodyColor}">蛇身</Label>
-                    <Button Name="btn_snakeBodyColor" Grid.Column="1">
-                        <Button.Template>
+                    <Label Target="{Binding ElementName=btn_snakeBodyFill}">蛇身(_B)</Label>
+                    <Button Name="btn_snakeBodyFill" 
+                            Grid.Column="1" 
+                            Click="BrushButton_Click" 
+                            Background="{Binding SnakeBodyFill}"
+                            Template="{StaticResource colorPickerTemplate}">
+                        <!--<Button.Template>
                             <ControlTemplate>
                                 <Rectangle Fill="{Binding SnakeBodyFill}"/>
                             </ControlTemplate>
-                        </Button.Template>
+                        </Button.Template>-->
                     </Button>
-                    <Label Target="{Binding ElementName=btn_snakeHeadColor}" Grid.Row="1">蛇头</Label>
-                    <Button Name="btn_snakeHeadColor" Grid.Row="1" Grid.Column="1">
-                        <Button.Template>
+                    <Label Target="{Binding ElementName=btn_snakeHeadFill}" Grid.Row="1">蛇头(_H)</Label>
+                    <Button Name="btn_snakeHeadFill" 
+                            Grid.Row="1" Grid.Column="1" 
+                            Background="{Binding SnakeHeadFill}"
+                            Click="BrushButton_Click"
+                            Template="{StaticResource colorPickerTemplate}">
+                        <!--<Button.Template>
                             <ControlTemplate>
                                 <Rectangle Fill="{Binding SnakeHeadFill}"/>
                             </ControlTemplate>
-                        </Button.Template>
+                        </Button.Template>-->
                     </Button>
                 </Grid>
             </GroupBox>
@@ -107,20 +150,28 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label>填充</Label>
-                    <Button Name="btn_foodFill" Grid.Column="1">
-                        <Button.Template>
+                    <Button Name="btn_foodFill" 
+                            Grid.Column="1" 
+                            Click="BrushButton_Click"
+                            Background="{Binding FoodFill}"
+                            Template="{StaticResource colorPickerTemplate}">
+                        <!--<Button.Template>
                             <ControlTemplate>
                                 <Rectangle Fill="{Binding FoodFill}"/>
                             </ControlTemplate>
-                        </Button.Template>
+                        </Button.Template>-->
                     </Button>
                     <Label Grid.Row="1">边框</Label>
-                    <Button Name="btn_foodStroke" Grid.Row="1" Grid.Column="1">
-                        <Button.Template>
+                    <Button Name="btn_foodStroke" 
+                            Grid.Row="1" Grid.Column="1" 
+                            Click="BrushButton_Click" 
+                            Background="{Binding FoodStroke}" 
+                            Template="{StaticResource colorPickerTemplate}">
+                        <!--<Button.Template>
                             <ControlTemplate>
                                 <Rectangle Fill="{Binding FoodStroke}"/>
                             </ControlTemplate>
-                        </Button.Template>
+                        </Button.Template>-->
                     </Button>
                     <Label Grid.Row="2">边框粗细</Label>
                     <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_foodStrokeThickness"/>
@@ -141,25 +192,41 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label>填充</Label>
-                    <Button Name="btn_brickFill" Grid.Column="1">
-                        <Button.Template>
+                    <Button Name="btn_brickFill" 
+                            Grid.Column="1"
+                            Click="BrushButton_Click" 
+                            Background="{Binding BrickFill}"
+                            Template="{StaticResource colorPickerTemplate}">
+                        <!--<Button.Template>
                             <ControlTemplate>
                                 <Rectangle Fill="{Binding BrickFill}"/>
                             </ControlTemplate>
-                        </Button.Template>
+                        </Button.Template>-->
                     </Button>
                     <Label Grid.Row="1">边框</Label>
-                    <Button Name="btn_brickStroke" Grid.Row="1" Grid.Column="1">
-                        <Button.Template>
+                    <Button Name="btn_brickStroke"
+                            Grid.Row="1" Grid.Column="1"
+                            Click="BrushButton_Click"
+                            Background="{Binding BrickStroke}"
+                            Template="{StaticResource colorPickerTemplate}">
+                        <!--<Button.Template>
                             <ControlTemplate>
                                 <Rectangle Fill="{Binding BrickStroke}"/>
                             </ControlTemplate>
-                        </Button.Template>
+                        </Button.Template>-->
                     </Button>
                     <Label Grid.Row="2">边框粗细</Label>
                     <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_brickStrokeThickness"/>
                 </Grid>
             </GroupBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Padding="10" Content="确定(_A)"/>
+                <Button Padding="10" Grid.Column="1" Content="取消(_C)" Click="Cancel_Click"/>
+            </Grid>
         </StackPanel>
     </ScrollViewer>
 </Window>

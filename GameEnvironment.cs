@@ -27,7 +27,7 @@ namespace Snake {
         public static int initialBodyCount = 3;
 
         public static Brush foodBrush = Brushes.Yellow;
-        public static Brush foodStroke = null;
+        public static Brush foodStroke = Brushes.Transparent;
         public static double foodStrokeThickness = 0;
 
         public static List<GridPosition> brickPositions = new List<GridPosition>() {
@@ -35,7 +35,7 @@ namespace Snake {
             new GridPosition(1,0),
         };
         public static Brush brickBrush = Brushes.AliceBlue;
-        public static Brush brickStroke = null;
+        public static Brush brickStroke = Brushes.Transparent;
         public static double brickStrokeThickness = 0;
     }
 }

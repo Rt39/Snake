@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Snake.Entities;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +20,10 @@ namespace Snake.Views {
     /// Interaction logic for EditPage.xaml
     /// </summary>
     public partial class EditPage : Page {
+        public ObservableCollection<AbstructEntity> Entities { get; set; } = new ObservableCollection<AbstructEntity>();
         public EditPage() {
             InitializeComponent();
+            DataContext = this;
         }
     }
 }
