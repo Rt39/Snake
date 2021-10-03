@@ -52,6 +52,11 @@ namespace Snake.ViewModels {
             get => _snakeHeadFill;
             set => SetProperty(ref _snakeHeadFill, value);
         }
+        private int _initialBodyCount;
+        public int InitialBodyCount {
+            get { return _initialBodyCount; }
+            set { SetProperty(ref _initialBodyCount, value); }
+        }
         #endregion
         #region 食物设置
         private Brush _foodFill;
@@ -114,6 +119,7 @@ namespace Snake.ViewModels {
             GameEnvironment.grid2Brush = _grid2Fill;
             GameEnvironment.snakeBodyBrush = _snakeBodyFill;
             GameEnvironment.snakeHeadBrush = _snakeHeadFill;
+            GameEnvironment.initialBodyCount = _initialBodyCount;
             GameEnvironment.foodBrush = _foodFill;
             GameEnvironment.foodStroke = _foodStroke;
             GameEnvironment.foodStrokeThickness = _foodStrokeThickness;

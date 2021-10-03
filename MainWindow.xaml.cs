@@ -34,7 +34,7 @@ namespace Snake {
         public MainWindow() {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
-            frame.Navigate(new GamePage());
+            frame.Navigate(new EditPage());
             //DataContext = this;
 
             //_gameController = new GameController(Entities);

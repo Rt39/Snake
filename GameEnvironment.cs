@@ -35,7 +35,7 @@ namespace Snake {
             new GridPosition(1,0),
         };
         public static Brush brickBrush = Brushes.AliceBlue;
-        public static Brush brickStroke = Brushes.Transparent;
-        public static double brickStrokeThickness = 0;
+        public static Brush brickStroke = Brushes.Black;
+        public static double brickStrokeThickness = 1;
     }
 }

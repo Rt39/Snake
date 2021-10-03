@@ -1,4 +1,6 @@
-﻿using Snake.Entities;
+﻿using Snake.Controllers;
+using Snake.Entities;
+using Snake.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,10 +22,12 @@ namespace Snake.Views {
     /// Interaction logic for EditPage.xaml
     /// </summary>
     public partial class EditPage : Page {
-        public ObservableCollection<AbstructEntity> Entities { get; set; } = new ObservableCollection<AbstructEntity>();
+        private readonly BackgroundGridController _backgroundGridController;
+        private readonly SnakeController _snakeController;
+        private readonly EditViewModel _editViewModel;
         public EditPage() {
             InitializeComponent();
-            DataContext = this;
+            DataContext = _editViewModel = new EditViewModel();
         }
     }
 }

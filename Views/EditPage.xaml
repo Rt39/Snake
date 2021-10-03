@@ -4,22 +4,35 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Snake.Views"
+      xmlns:viewmodels="clr-namespace:Snake.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:EditViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EditPage">
     <Grid>
         <DockPanel>
+            <!--底部状态栏-->
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>
                     <TextBlock Text="miaonei"/>
                 </StatusBarItem>
             </StatusBar>
+            <!--左侧工具栏-->
             <ToolBarTray Orientation="Vertical" DockPanel.Dock="Left">
                 <ToolBar DockPanel.Dock="Left">
-                    <Button Content="miaonei"></Button>
-                    <Button Content="xiaomaomi"></Button>
+                    <!--使得RadioButton看起来像ToggleButton-->
+                    <ToolBar.Resources>
+                        <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}"/>
+                    </ToolBar.Resources>
+                    <Button Width="30">
+                        <Image Stretch="UniformToFill" Source="{Binding Path=DirectionButtonIcon}"/>
+                    </Button>
+                    <Separator/>
+                    <RadioButton ToolTip="鼠标" Content="mouse"/>
+                    <RadioButton Content="xiaomaomi"/>
+                    <RadioButton Content="miaonei"/>
                 </ToolBar>
             </ToolBarTray>
+            <!--绘图区-->
             <ItemsControl ItemsSource="{Binding Entities, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

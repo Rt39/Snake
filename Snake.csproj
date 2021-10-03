@@ -71,8 +71,10 @@
     <Compile Include="Entities\Food.cs" />
     <Compile Include="Entities\GridPosition.cs" />
     <Compile Include="Entities\SnakePart.cs" />
+    <Compile Include="Extenstions\BitmapExtension.cs" />
     <Compile Include="GameEnvironment.cs" />
     <Compile Include="ViewModels\AbstructViewModel.cs" />
+    <Compile Include="ViewModels\EditViewModel.cs" />
     <Compile Include="ViewModels\NewGameEnvironmentViewModel.cs" />
     <Compile Include="Views\EditPage.xaml.cs">
       <DependentUpon>EditPage.xaml</DependentUpon>
@@ -145,6 +147,24 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dao\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\down-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\left-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\right-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\up-arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brick-wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\snake.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

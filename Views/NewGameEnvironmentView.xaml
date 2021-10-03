@@ -108,6 +108,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Target="{Binding ElementName=btn_snakeBodyFill}">蛇身(_B)</Label>
                     <Button Name="btn_snakeBodyFill" 
@@ -133,6 +134,8 @@
                             </ControlTemplate>
                         </Button.Template>-->
                     </Button>
+                    <Label Target="{Binding ElementName=tbx_initalBodyCount}" Grid.Row="2">初始身体节数(_I)</Label>
+                    <TextBox Name="tbx_initalBodyCount" Grid.Row="2" Grid.Column="1" Text="{Binding InitialBodyCount}"/>
                 </Grid>
             </GroupBox>
             <GroupBox>

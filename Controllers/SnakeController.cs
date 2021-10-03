@@ -38,8 +38,33 @@ namespace Snake.Controllers {
         private readonly Brush _headBrush;
         private readonly Brush _bodyBrush;
 
-        private readonly int _initialBodyCount;
-        private readonly GridPosition _initialHeadPosition;
+        private bool _isInitialed;
+        public bool IsInitialed { get { return _isInitialed; } }
+
+        private int _intialBodyCount;
+        public int InitialBodyCount {
+            get { return _intialBodyCount; }
+            set {
+                if (value == _intialBodyCount) return;
+                _intialBodyCount = value;
+                if (_isInitialed) {
+                    DeleteSnake();
+                    InitialSnake();
+                }
+            }
+        }
+        private GridPosition _initialHeadPosition;
+        public GridPosition InitialHeadPosition {
+            get { return _initialHeadPosition; }
+            set {
+                if (Equals(value, _initialHeadPosition)) return;
+                _initialHeadPosition = value;
+                if (_isInitialed) {
+                    DeleteSnake();
+                    InitialSnake();
+                }
+            }
+        }
         /// <summary>
         /// 蛇的方向
         /// </summary>
@@ -50,8 +75,8 @@ namespace Snake.Controllers {
             _snakeBody = new List<SnakePart>();
             _headBrush = headBrush;
             _bodyBrush = bodyBrush;
-            _initialBodyCount = initialBodyCount;
-            _initialHeadPosition = initialHeadPosition;
+            InitialBodyCount = initialBodyCount;
+            InitialHeadPosition = initialHeadPosition;
             Direction = direction;
         }
         /// <summary>
@@ -59,29 +84,38 @@ namespace Snake.Controllers {
         /// </summary>
         public void InitialSnake() {
             // 初始化蛇头
-            _snakeHead = new SnakePart(_initialHeadPosition, _headBrush, null, 0);
+            _snakeHead = new SnakePart(InitialHeadPosition, _headBrush, null, 0);
             _entities.Add(_snakeHead);
             // 根据蛇的朝向添加蛇身子
-            for (uint i = (uint)_initialBodyCount; i > 0; --i) {
+            for (uint i = (uint)InitialBodyCount; i > 0; --i) {
                 switch (Direction) {
                     case SnakeDirection.Left:
-                        _snakeBody.Add(new SnakePart(_initialHeadPosition.row,
-                            (_initialHeadPosition.column + i) % GameEnvironment.columnCount,
+                        _snakeBody.Add(new SnakePart(InitialHeadPosition.row,
+                            (InitialHeadPosition.column + i) % GameEnvironment.columnCount,
                         _bodyBrush, null, 0));
                         break;
                     case SnakeDirection.Up:
-                        _snakeBody.Add(new SnakePart((_initialHeadPosition.row + i) % GameEnvironment.rowCount, _initialHeadPosition.column, _bodyBrush, null, 0));
+                        _snakeBody.Add(new SnakePart((InitialHeadPosition.row + i) % GameEnvironment.rowCount, InitialHeadPosition.column, _bodyBrush, null, 0));
                         break;
                     case SnakeDirection.Right:
-                        _snakeBody.Add(new SnakePart(_initialHeadPosition.row, (_initialHeadPosition.column + GameEnvironment.columnCount - i) % GameEnvironment.columnCount, _bodyBrush, null, 0));
+                        _snakeBody.Add(new SnakePart(InitialHeadPosition.row, (InitialHeadPosition.column + GameEnvironment.columnCount - i) % GameEnvironment.columnCount, _bodyBrush, null, 0));
                         break;
                     case SnakeDirection.Down:
-                        _snakeBody.Add(new SnakePart((_initialHeadPosition.row + GameEnvironment.rowCount - i) % GameEnvironment.rowCount, _initialHeadPosition.column, _bodyBrush, null, 0));
+                        _snakeBody.Add(new SnakePart((InitialHeadPosition.row + GameEnvironment.rowCount - i) % GameEnvironment.rowCount, InitialHeadPosition.column, _bodyBrush, null, 0));
                         break;
                 }
             }
             foreach (SnakePart s in _snakeBody)
                 _entities.Add(s);
+            _isInitialed = true;
+        }
+
+        private void DeleteSnake() {
+            _entities.Remove(_snakeHead);
+            _snakeHead = null;
+            foreach (var v in _snakeBody)
+                _entities.Remove(v);
+            _snakeBody.Clear();
         }
 
         /// <summary>
