@@ -21,7 +21,7 @@ namespace Snake.Views {
     /// Interaction logic for GamePage.xaml
     /// </summary>
     public partial class GamePage : Page {
-        public ObservableCollection<AbstructEntity> Entities { get; set; } = new ObservableCollection<AbstructEntity>();
+        public ObservableCollection<AbstructEntity> Entities { get; } = new ObservableCollection<AbstructEntity>();
 
         private GameController _gameController;
         public GamePage() {

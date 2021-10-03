@@ -29,5 +29,9 @@ namespace Snake.Views {
             InitializeComponent();
             DataContext = _editViewModel = new EditViewModel();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            _editViewModel.SnakeDirection = SnakeController.SnakeDirection.Left;
+        }
     }
 }

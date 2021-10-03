@@ -15,12 +15,20 @@ namespace Snake.ViewModels {
     public class EditViewModel : AbstructViewModel {
         public ObservableCollection<AbstructEntity> Entities { get; } = new ObservableCollection<AbstructEntity>();
         private readonly NewGameEnvironmentViewModel _newGameEnvironmentViewModel;
+        private readonly BackgroundGridController _backgroundGridController;
+        private readonly SnakeController _snakeController;
 
+        // 蛇的方向
         private SnakeController.SnakeDirection _snakeDirection = SnakeController.SnakeDirection.Right;
         public SnakeController.SnakeDirection SnakeDirection {
             get { return _snakeDirection; }
-            set { SetProperty(ref _snakeDirection, value); }
+            set {
+                _snakeDirection = value;
+                OnPropertyChanged("DirectionButtonIcon");
+            }
         }
+
+        #region 图标
         public BitmapImage DirectionButtonIcon {
             get {
                 switch (_snakeDirection) {
@@ -37,5 +45,13 @@ namespace Snake.ViewModels {
                 }
             }
         }
+        public BitmapImage CursorIcon { get { return Properties.Resources.cursor.ToBitmapImage(); } }
+        public BitmapImage SnakeHeadIcon { get { return Properties.Resources.snake.ToBitmapImage(); } }
+        public BitmapImage BrickIcon { get { return Properties.Resources.brick_wall.ToBitmapImage(); } }
+        public BitmapImage EraserIcon { get { return Properties.Resources.eraser.ToBitmapImage(); } }
+        public BitmapImage TickIcon { get { return Properties.Resources.check.ToBitmapImage(); } }
+        public BitmapImage CrossIcon { get { return Properties.Resources.close.ToBitmapImage(); } }
+        #endregion
+
     }
 }

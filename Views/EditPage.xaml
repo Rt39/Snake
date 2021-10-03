@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Snake.Views"
       xmlns:viewmodels="clr-namespace:Snake.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:EditViewModel}"
+      xmlns:resx="clr-namespace:Snake.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EditPage">
@@ -21,15 +22,32 @@
                 <ToolBar DockPanel.Dock="Left">
                     <!--使得RadioButton看起来像ToggleButton-->
                     <ToolBar.Resources>
-                        <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}"/>
+                        <Style TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+                            <!--不知道为什么，这句话似乎没有作用-->
+                            <!--<Setter Property="RadioButton.Width" Value="3"/>-->
+                        </Style>
                     </ToolBar.Resources>
-                    <Button Width="30">
+                    <!--调整蛇方向-->
+                    <Button Click="Button_Click" ToolTip="调整蛇方向" Width="30">
                         <Image Stretch="UniformToFill" Source="{Binding Path=DirectionButtonIcon}"/>
                     </Button>
                     <Separator/>
-                    <RadioButton ToolTip="鼠标" Content="mouse"/>
-                    <RadioButton Content="xiaomaomi"/>
-                    <RadioButton Content="miaonei"/>
+                    <!--滑鼠-->
+                    <RadioButton Width="30" ToolTip="鼠标指针">
+                        <Image Stretch="UniformToFill" Source="{Binding Path=CursorIcon}"/>
+                    </RadioButton>
+                    <!--蛇头-->
+                    <RadioButton Width="30" ToolTip="改变蛇头位置">
+                        <Image Stretch="UniformToFill" Source="{Binding Path=SnakeHeadIcon}"/>
+                    </RadioButton>
+                    <!--添加砖块-->
+                    <RadioButton Width="30" ToolTip="添加砖块">
+                        <Image Stretch="UniformToFill" Source="{Binding Path=BrickIcon}"/>
+                    </RadioButton>
+                    <!--橡皮-->
+                    <RadioButton Width="30" ToolTip="擦除砖块">
+                        <Image Stretch="UniformToFill" Source="{Binding Path=EraserIcon}"/>
+                    </RadioButton>
                 </ToolBar>
             </ToolBarTray>
             <!--绘图区-->
