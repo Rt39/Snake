@@ -24,5 +24,6 @@ namespace Snake.Entities {
         public static explicit operator GridPosition(Point point) {
             return new GridPosition((uint)(point.Y / GameEnvironment.gridSize), (uint)(point.X / GameEnvironment.gridSize));
         }
+        public override string ToString() { return $"{row},{column}"; }
     }
 }

@@ -13,7 +13,7 @@
         <ItemsControl ItemsSource="{Binding Entities, UpdateSourceTrigger=PropertyChanged}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas ClipToBounds="True"/>
+                    <Canvas Background="White" ClipToBounds="True"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>

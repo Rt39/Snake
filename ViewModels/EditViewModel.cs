@@ -14,16 +14,21 @@ using System.Windows.Media.Imaging;
 namespace Snake.ViewModels {
     public class EditViewModel : AbstructViewModel {
         public ObservableCollection<AbstructEntity> Entities { get; } = new ObservableCollection<AbstructEntity>();
+
         private readonly NewGameEnvironmentViewModel _newGameEnvironmentViewModel;
         private readonly BackgroundGridController _backgroundGridController;
         private readonly SnakeController _snakeController;
+        public GridPosition SnakeHeadPosition {
+            get { return _snakeController.InitialHeadPosition; }
+            set { _snakeController.InitialHeadPosition = value; }
+        }
 
         // 蛇的方向
-        private SnakeController.SnakeDirection _snakeDirection = SnakeController.SnakeDirection.Right;
         public SnakeController.SnakeDirection SnakeDirection {
-            get { return _snakeDirection; }
+            get { return _snakeController.Direction; }
             set {
-                _snakeDirection = value;
+                _snakeController.Direction = value;
+                // 指示wpf重新获取DirectionButtonIcon
                 OnPropertyChanged("DirectionButtonIcon");
             }
         }
@@ -31,7 +36,7 @@ namespace Snake.ViewModels {
         #region 图标
         public BitmapImage DirectionButtonIcon {
             get {
-                switch (_snakeDirection) {
+                switch (SnakeDirection) {
                     case SnakeController.SnakeDirection.Left:
                         return Properties.Resources.left_arrow.ToBitmapImage();
                     case SnakeController.SnakeDirection.Up:
@@ -53,5 +58,16 @@ namespace Snake.ViewModels {
         public BitmapImage CrossIcon { get { return Properties.Resources.close.ToBitmapImage(); } }
         #endregion
 
+        public EditViewModel(/*TODO: 传递NewGameEnviromnmentViewModel*/) {
+            _newGameEnvironmentViewModel = new NewGameEnvironmentViewModel();// TODO
+            _backgroundGridController = new BackgroundGridController(Entities, _newGameEnvironmentViewModel.Grid1Fill, _newGameEnvironmentViewModel.Grid2Fill);
+            _snakeController = new SnakeController(Entities, _newGameEnvironmentViewModel.SnakeHeadFill, _newGameEnvironmentViewModel.SnakeBodyFill, _newGameEnvironmentViewModel.InitialBodyCount, GameEnvironment.initialSnakeHead, GameEnvironment.initialDirection);
+            _backgroundGridController.GenerateBackgroundGrid();
+            _snakeController.InitialSnake();
+        }
+
+        public void SetSnakeDirection(GridPosition gridPosition) {
+            _snakeController.InitialHeadPosition = gridPosition;
+        }
     }
 }

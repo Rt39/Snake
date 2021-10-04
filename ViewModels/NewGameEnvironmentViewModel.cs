@@ -102,6 +102,7 @@ namespace Snake.ViewModels {
             _grid2Fill = GameEnvironment.grid2Brush;
             _snakeBodyFill = GameEnvironment.snakeBodyBrush;
             _snakeHeadFill = GameEnvironment.snakeHeadBrush;
+            _initialBodyCount = GameEnvironment.initialBodyCount;
             _foodFill = GameEnvironment.foodBrush;
             _foodStroke = GameEnvironment.foodStroke;
             _foodStrokeThickness = GameEnvironment.foodStrokeThickness;

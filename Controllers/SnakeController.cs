@@ -38,21 +38,11 @@ namespace Snake.Controllers {
         private readonly Brush _headBrush;
         private readonly Brush _bodyBrush;
 
-        private bool _isInitialed;
+        private bool _isInitialed = false;
         public bool IsInitialed { get { return _isInitialed; } }
 
-        private int _intialBodyCount;
-        public int InitialBodyCount {
-            get { return _intialBodyCount; }
-            set {
-                if (value == _intialBodyCount) return;
-                _intialBodyCount = value;
-                if (_isInitialed) {
-                    DeleteSnake();
-                    InitialSnake();
-                }
-            }
-        }
+        private int _initialBodyCount;
+        public int InitialBodyCount { get { return _initialBodyCount; } }
         private GridPosition _initialHeadPosition;
         public GridPosition InitialHeadPosition {
             get { return _initialHeadPosition; }
@@ -68,14 +58,25 @@ namespace Snake.Controllers {
         /// <summary>
         /// 蛇的方向
         /// </summary>
-        public SnakeDirection Direction { get; set; }
+        private SnakeDirection _direction = SnakeDirection.Right;
+        public SnakeDirection Direction {
+            get { return _direction; }
+            set {
+                if (Equals(value, _direction)) return;
+                _direction = value;
+                if (_isInitialed) {
+                    DeleteSnake();
+                    InitialSnake();
+                }
+            }
+        }
 
         public SnakeController(ICollection<AbstructEntity> entities, Brush headBrush, Brush bodyBrush, int initialBodyCount, GridPosition initialHeadPosition, SnakeDirection direction) {
             _entities = entities;
             _snakeBody = new List<SnakePart>();
             _headBrush = headBrush;
             _bodyBrush = bodyBrush;
-            InitialBodyCount = initialBodyCount;
+            _initialBodyCount = initialBodyCount;
             InitialHeadPosition = initialHeadPosition;
             Direction = direction;
         }
