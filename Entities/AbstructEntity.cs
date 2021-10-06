@@ -9,12 +9,11 @@ using System.Windows.Media;
 namespace Snake.Entities {
     public abstract class AbstructEntity {
         protected readonly GridPosition _gridPosition;
-        public GridPosition GridPos { get { return _gridPosition; } }
-        public Point Position { get { return (Point)_gridPosition; } }
+        public GridPosition Position { get { return _gridPosition; } }
         public uint Row { get { return _gridPosition.row; } }
         public uint Column { get { return _gridPosition.column; } }
-        public double X { get { return Position.X; } }
-        public double Y { get { return Position.Y; } }
+        public double X { get { return ((Point)Position).X; } }
+        public double Y { get { return ((Point)Position).Y; } }
 
         protected readonly Geometry _shape;
         /// <summary>

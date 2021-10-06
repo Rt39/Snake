@@ -10,7 +10,7 @@ namespace Snake.Controllers {
     public class FoodController : AbstructController {
         private Food _food = null;
 
-        public GridPosition FoodPosition { get { return _food.GridPos; } }
+        public GridPosition FoodPosition { get { return _food.Position; } }
 
         private readonly Brush _foodBrush;
         private readonly Brush _foodStrokeBrush;

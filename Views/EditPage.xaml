@@ -33,34 +33,36 @@
                     </Button>
                     <Separator/>
                     <!--滑鼠-->
-                    <RadioButton Name="rbt_mouse" Width="30" ToolTip="鼠标指针">
+                    <RadioButton Name="rbt_mouse" Width="30" ToolTip="鼠标指针" Checked="MouseRadioButton_Checked">
                         <Image Stretch="UniformToFill" Source="{Binding Path=CursorIcon}"/>
                     </RadioButton>
                     <!--蛇头-->
-                    <RadioButton Name="rbt_snakeHeadPosition" Width="30" ToolTip="改变蛇头位置">
+                    <RadioButton Name="rbt_snakeHeadPosition" Width="30" ToolTip="改变蛇头位置" Checked="SnakeHeadPositionRadioButton_Checked">
                         <Image Stretch="UniformToFill" Source="{Binding Path=SnakeHeadIcon}"/>
                     </RadioButton>
                     <!--添加砖块-->
-                    <RadioButton Name="rbt_addBrick" Width="30" ToolTip="添加砖块">
+                    <RadioButton Name="rbt_addBrick" Width="30" ToolTip="添加砖块" Checked="AddBrickRadioButton_Checked">
                         <Image Stretch="UniformToFill" Source="{Binding Path=BrickIcon}"/>
                     </RadioButton>
                     <!--橡皮-->
-                    <RadioButton Name="rbt_eraseBrick" Width="30" ToolTip="擦除砖块">
+                    <RadioButton Name="rbt_eraseBrick" Width="30" ToolTip="擦除砖块" Checked="EraseBrickRadioButton_Checked">
                         <Image Stretch="UniformToFill" Source="{Binding Path=EraserIcon}"/>
                     </RadioButton>
                     <Separator/>
                     <!--提交-->
-                    <Button Name="btn_submit" Width="30" ToolTip="提交">
+                    <Button Name="btn_submit" Width="30" ToolTip="提交" Click="SubmitButton_Click">
                         <Image Stretch="UniformToFill" Source="{Binding Path=TickIcon}"/>
                     </Button>
                     <!--取消-->
-                    <Button Name="btn_cancel" Width="30" ToolTip="取消">
+                    <Button Name="btn_cancel" Width="30" ToolTip="取消" Click="CancelButton_Click">
                         <Image Stretch="UniformToFill" Source="{Binding Path=CrossIcon}"/>
                     </Button>
                 </ToolBar>
             </ToolBarTray>
             <!--绘图区-->
-            <Grid Name="drawArea" MouseDown="DrawArea_MouseDown" MouseMove="DrawArea_MouseMove">
+            <Grid Name="drawArea"
+                  Cursor="{Binding Path=Cursor}"
+                  MouseDown="DrawArea_MouseDown" MouseMove="DrawArea_MouseMove">
                 <ItemsControl Name="itemsControl" ItemsSource="{Binding Entities, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>

@@ -27,13 +27,13 @@ namespace Snake.Controllers {
         /// </summary>
         public IEnumerable<GridPosition> SnakeBodyPositions {
             get {
-                return _snakeBody.Select(e => e.GridPos);
+                return _snakeBody.Select(e => e.Position);
             }
         }
         /// <summary>
         /// 蛇头的位置
         /// </summary>
-        public GridPosition SnakeHeadPosition { get { return _snakeHead.GridPos; } }
+        public GridPosition SnakeHeadPosition { get { return _snakeHead.Position; } }
 
         private readonly Brush _headBrush;
         private readonly Brush _bodyBrush;
@@ -135,7 +135,7 @@ namespace Snake.Controllers {
         /// </summary>
         public void MoveSnakeRetainTail() {
             // 添加一节头部身子
-            SnakePart frontBody = new SnakePart(_snakeHead.GridPos, _bodyBrush, null, 0);
+            SnakePart frontBody = new SnakePart(_snakeHead.Position, _bodyBrush, null, 0);
             _snakeBody.Add(frontBody);
             //if (System.Windows.Application.Current == null) { new System.Windows.Application { ShutdownMode = ShutdownMode.OnExplicitShutdown }; }
             Application.Current.Dispatcher.Invoke(new Action(() => _entities.Add(frontBody)));

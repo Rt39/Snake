@@ -25,14 +25,6 @@ namespace Snake.Views {
     public partial class EditPage : Page {
         #region 字段
         private readonly EditViewModel _editViewModel;
-        // 当前的指针状态
-        private enum EditStatus {
-            Cursor,
-            SnakeHead,
-            Brick,
-            Erasor,
-        }
-        private EditStatus _editstatus = EditStatus.Cursor;
         #endregion
 
         public EditPage() {
@@ -41,7 +33,6 @@ namespace Snake.Views {
             rbt_mouse.IsChecked = true;
         }
         #region 事件
-
         private void SnakeDirectionButton_Click(object sender, RoutedEventArgs e) {
             switch (_editViewModel.SnakeDirection) {
                 case SnakeController.SnakeDirection.Left:
@@ -58,20 +49,71 @@ namespace Snake.Views {
                     break;
             }
         }
-
+        // 画布鼠标按下事件
         private void DrawArea_MouseDown(object sender, MouseButtonEventArgs e) {
-            //Point point = e.GetPosition(grid);
-            //Debug.WriteLine(point);
-            //Debug.WriteLine((GridPosition)point);
-        }
-
-        private void DrawArea_MouseMove(object sender, MouseEventArgs e) {
-            if (e.LeftButton == MouseButtonState.Pressed) {
-                Point point = e.GetPosition(drawArea);
-                Debug.WriteLine(point);
-                Debug.WriteLine((GridPosition)point);
+            if (e.LeftButton != MouseButtonState.Pressed) return;
+            switch (_editViewModel.Status) {
+                case EditViewModel.EditStatus.Cursor:
+                    return;
+                case EditViewModel.EditStatus.SetSnakeHeadPosition:
+                    _editViewModel.SnakeHeadPosition = (GridPosition)e.GetPosition(drawArea);
+                    _editViewModel.Status = EditViewModel.EditStatus.Cursor;
+                    rbt_mouse.IsChecked = true;
+                    break;
+                case EditViewModel.EditStatus.AddBricks:
+                    _editViewModel.AddBrick((GridPosition)e.GetPosition(drawArea));
+                    return;
+                case EditViewModel.EditStatus.EraseBricks:
+                    _editViewModel.EraseBrick((GridPosition)e.GetPosition(drawArea));
+                    return;
+                default:
+                    return;
             }
         }
+        // 画布鼠标拖动事件
+        private void DrawArea_MouseMove(object sender, MouseEventArgs e) {
+            if (e.LeftButton != MouseButtonState.Pressed) return;
+            switch (_editViewModel.Status) {
+                case EditViewModel.EditStatus.Cursor:
+                    return;
+                case EditViewModel.EditStatus.SetSnakeHeadPosition:
+                    return;
+                case EditViewModel.EditStatus.AddBricks:
+                    _editViewModel.AddBrick((GridPosition)e.GetPosition(drawArea));
+                    return;
+                case EditViewModel.EditStatus.EraseBricks:
+                    _editViewModel.EraseBrick((GridPosition)e.GetPosition(drawArea));
+                    return;
+                default:
+                    return;
+            }
+        }
+
+        private void SnakeHeadPositionRadioButton_Checked(object sender, RoutedEventArgs e) {
+            _editViewModel.Status = EditViewModel.EditStatus.SetSnakeHeadPosition;
+        }
+
+        private void AddBrickRadioButton_Checked(object sender, RoutedEventArgs e) {
+            _editViewModel.Status = EditViewModel.EditStatus.AddBricks;
+        }
+
+        private void EraseBrickRadioButton_Checked(object sender, RoutedEventArgs e) {
+            _editViewModel.Status = EditViewModel.EditStatus.EraseBricks;
+        }
+
+        private void MouseRadioButton_Checked(object sender, RoutedEventArgs e) {
+            _editViewModel.Status = EditViewModel.EditStatus.Cursor;
+        }
+
+        private void SubmitButton_Click(object sender, RoutedEventArgs e) {
+            throw new NotImplementedException();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e) {
+            throw new NotImplementedException();
+        }
+
+
         #endregion
         /*尝试了从ItemsControl获取Canvas，结果失败了*/
         /*最后使用的方法是在ItemsControl外部套上一层Grid，通过Grid获取鼠标事件*/

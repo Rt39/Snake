@@ -10,18 +10,64 @@ using System.Threading.Tasks;
 using Snake.Extenstions;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Input;
 
 namespace Snake.ViewModels {
     public class EditViewModel : AbstructViewModel {
+        // canvas所绑定的属性
         public ObservableCollection<AbstructEntity> Entities { get; } = new ObservableCollection<AbstructEntity>();
 
+        #region 控制器
         private readonly NewGameEnvironmentViewModel _newGameEnvironmentViewModel;
         private readonly BackgroundGridController _backgroundGridController;
+        // 手动绘制砖块
+        private readonly List<Brick> _bricks = new List<Brick>();
+        #endregion
+
+        #region 属性
         private readonly SnakeController _snakeController;
+        /// <summary>
+        /// 设置蛇头的初始位置
+        /// </summary>
         public GridPosition SnakeHeadPosition {
             get { return _snakeController.InitialHeadPosition; }
             set { _snakeController.InitialHeadPosition = value; }
         }
+
+        public enum EditStatus {
+            Cursor,
+            SetSnakeHeadPosition,
+            AddBricks,
+            EraseBricks,
+        }
+        private EditStatus _status;
+        /// <summary>
+        /// 获取和设置当前的编辑状态
+        /// </summary>
+        public EditStatus Status {
+            get { return _status; }
+            set {
+                _status = value;
+                OnPropertyChanged("Cursor");
+            }
+        }
+        public Cursor Cursor {
+            get {
+                switch (Status) {
+                    case EditStatus.Cursor:
+                        return Cursors.Arrow;
+                    case EditStatus.SetSnakeHeadPosition:
+                        return Cursors.Pen;
+                    case EditStatus.AddBricks:
+                        return Cursors.Pen;
+                    case EditStatus.EraseBricks:
+                        return Cursors.Hand;
+                    default:
+                        return DependencyProperty.UnsetValue as Cursor;
+                }
+            }
+        }
+        #endregion
 
         // 蛇的方向
         public SnakeController.SnakeDirection SnakeDirection {
@@ -66,8 +112,20 @@ namespace Snake.ViewModels {
             _snakeController.InitialSnake();
         }
 
-        public void SetSnakeDirection(GridPosition gridPosition) {
-            _snakeController.InitialHeadPosition = gridPosition;
+        #region 绘制砖块相关函数
+        public void AddBrick(GridPosition position) {
+            if (_bricks.Exists(t => Equals(t.Position, position))) return;
+            Brick b = new Brick(position, _newGameEnvironmentViewModel.BrickFill, _newGameEnvironmentViewModel.BrickStroke, _newGameEnvironmentViewModel.BrickStrokeThickness);
+            _bricks.Add(b);
+            Entities.Add(b);
         }
+
+        public void EraseBrick(GridPosition position) {
+            Brick b = _bricks.FirstOrDefault(t => Equals(t.Position, position));
+            if (b == null) return;
+            Entities.Remove(b);
+            _bricks.Remove(b);
+        }
+        #endregion
     }
 }
