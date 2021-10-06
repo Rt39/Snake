@@ -34,18 +34,18 @@ namespace Snake.Views {
         }
         #region 事件
         private void SnakeDirectionButton_Click(object sender, RoutedEventArgs e) {
-            switch (_editViewModel.SnakeDirection) {
+            switch (_editViewModel.Direction) {
                 case SnakeController.SnakeDirection.Left:
-                    _editViewModel.SnakeDirection = SnakeController.SnakeDirection.Down;
+                    _editViewModel.Direction = SnakeController.SnakeDirection.Down;
                     break;
                 case SnakeController.SnakeDirection.Up:
-                    _editViewModel.SnakeDirection = SnakeController.SnakeDirection.Left;
+                    _editViewModel.Direction = SnakeController.SnakeDirection.Left;
                     break;
                 case SnakeController.SnakeDirection.Right:
-                    _editViewModel.SnakeDirection = SnakeController.SnakeDirection.Up;
+                    _editViewModel.Direction = SnakeController.SnakeDirection.Up;
                     break;
                 case SnakeController.SnakeDirection.Down:
-                    _editViewModel.SnakeDirection = SnakeController.SnakeDirection.Right;
+                    _editViewModel.Direction = SnakeController.SnakeDirection.Right;
                     break;
             }
         }

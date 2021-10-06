@@ -17,21 +17,30 @@ namespace Snake.ViewModels {
         // canvas所绑定的属性
         public ObservableCollection<AbstructEntity> Entities { get; } = new ObservableCollection<AbstructEntity>();
 
-        #region 控制器
         private readonly NewGameEnvironmentViewModel _newGameEnvironmentViewModel;
         private readonly BackgroundGridController _backgroundGridController;
+
+        #region 绘制字段
         // 手动绘制砖块
         private readonly List<Brick> _bricks = new List<Brick>();
+        // 无法使用SnakeController来绘制，只能手动绘制SnakePart
+        private readonly List<SnakePart> _snakeBody = new List<SnakePart>();
+        private SnakePart _snakeHead;
         #endregion
 
         #region 属性
-        private readonly SnakeController _snakeController;
+        private GridPosition _snakeHeadPosition = GameEnvironment.initialSnakeHeadPosition;
         /// <summary>
         /// 设置蛇头的初始位置
         /// </summary>
         public GridPosition SnakeHeadPosition {
-            get { return _snakeController.InitialHeadPosition; }
-            set { _snakeController.InitialHeadPosition = value; }
+            get { return _snakeHeadPosition; }
+            set {
+                if (Equals(_snakeHeadPosition, value)) return;
+                _snakeHeadPosition = value;
+                DeleteSnake();
+                InitialSnake();
+            }
         }
 
         public enum EditStatus {
@@ -69,12 +78,17 @@ namespace Snake.ViewModels {
         }
         #endregion
 
-        // 蛇的方向
-        public SnakeController.SnakeDirection SnakeDirection {
-            get { return _snakeController.Direction; }
+        private SnakeController.SnakeDirection _direction = SnakeController.SnakeDirection.Right;
+        /// <summary>
+        /// 设置蛇头的朝向
+        /// </summary>
+        public SnakeController.SnakeDirection Direction {
+            get { return _direction; }
             set {
-                _snakeController.Direction = value;
-                // 指示wpf重新获取DirectionButtonIcon
+                if (Equals(_direction, value)) return;
+                _direction = value;
+                DeleteSnake();
+                InitialSnake();
                 OnPropertyChanged("DirectionButtonIcon");
             }
         }
@@ -82,7 +96,7 @@ namespace Snake.ViewModels {
         #region 图标
         public BitmapImage DirectionButtonIcon {
             get {
-                switch (SnakeDirection) {
+                switch (Direction) {
                     case SnakeController.SnakeDirection.Left:
                         return Properties.Resources.left_arrow.ToBitmapImage();
                     case SnakeController.SnakeDirection.Up:
@@ -107,9 +121,9 @@ namespace Snake.ViewModels {
         public EditViewModel(NewGameEnvironmentViewModel viewModel) {
             _newGameEnvironmentViewModel = viewModel;
             _backgroundGridController = new BackgroundGridController(Entities, _newGameEnvironmentViewModel.Grid1Fill, _newGameEnvironmentViewModel.Grid2Fill);
-            _snakeController = new SnakeController(Entities, _newGameEnvironmentViewModel.SnakeHeadFill, _newGameEnvironmentViewModel.SnakeBodyFill, _newGameEnvironmentViewModel.InitialBodyCount, GameEnvironment.initialSnakeHead, GameEnvironment.initialDirection);
             _backgroundGridController.GenerateBackgroundGrid();
-            _snakeController.InitialSnake();
+
+            InitialSnake();
         }
 
         #region 绘制砖块相关函数
@@ -127,10 +141,44 @@ namespace Snake.ViewModels {
             _bricks.Remove(b);
         }
         #endregion
+        private void InitialSnake() {
+            _snakeHead = new SnakePart(SnakeHeadPosition, _newGameEnvironmentViewModel.SnakeHeadFill, null, 0);
+
+            Entities.Add(_snakeHead);
+            for (uint i = (uint)_newGameEnvironmentViewModel.InitialBodyCount; i > 0; --i) {
+                switch (Direction) {
+                    case SnakeController.SnakeDirection.Left:
+                        _snakeBody.Add(new SnakePart(_snakeHead.Position.row,
+                            (_snakeHead.Position.column + i) % GameEnvironment.columnCount,
+                        _newGameEnvironmentViewModel.SnakeBodyFill, null, 0));
+                        break;
+                    case SnakeController.SnakeDirection.Up:
+                        _snakeBody.Add(new SnakePart((_snakeHead.Position.row + i) % GameEnvironment.rowCount, _snakeHead.Position.column, _newGameEnvironmentViewModel.SnakeBodyFill, null, 0));
+                        break;
+                    case SnakeController.SnakeDirection.Right:
+                        _snakeBody.Add(new SnakePart(_snakeHead.Position.row, (_snakeHead.Position.column + GameEnvironment.columnCount - i) % GameEnvironment.columnCount, _newGameEnvironmentViewModel.SnakeBodyFill, null, 0));
+                        break;
+                    case SnakeController.SnakeDirection.Down:
+                        _snakeBody.Add(new SnakePart((_snakeHead.Position.row + GameEnvironment.rowCount - i) % GameEnvironment.rowCount, _snakeHead.Position.column, _newGameEnvironmentViewModel.SnakeBodyFill, null, 0));
+                        break;
+                }
+            }
+            foreach (SnakePart s in _snakeBody)
+                Entities.Add(s);
+        }
+
+        private void DeleteSnake() {
+            Entities.Remove(_snakeHead);
+            _snakeHead = null;
+            foreach (var v in _snakeBody)
+                Entities.Remove(v);
+            _snakeBody.Clear();
+        }
+
         public void Submit() {
             _newGameEnvironmentViewModel.Submit();
-            GameEnvironment.initialSnakeHead = SnakeHeadPosition;
-            GameEnvironment.initialDirection = SnakeDirection;
+            GameEnvironment.initialSnakeHeadPosition = SnakeHeadPosition;
+            GameEnvironment.initialDirection = Direction;
             GameEnvironment.brickPositions = _bricks.Select(t => t.Position).ToList();
         }
     }

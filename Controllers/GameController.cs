@@ -33,7 +33,7 @@ namespace Snake.Controllers {
             //_timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _timer.Interval = 300;
             _backgroundGridController = new BackgroundGridController(entities, GameEnvironment.grid1Brush, GameEnvironment.grid2Brush);
-            _snakeController = new SnakeController(entities, GameEnvironment.snakeHeadBrush, GameEnvironment.snakeBodyBrush, GameEnvironment.initialBodyCount, GameEnvironment.initialSnakeHead, GameEnvironment.initialDirection);
+            _snakeController = new SnakeController(entities, GameEnvironment.snakeHeadBrush, GameEnvironment.snakeBodyBrush, GameEnvironment.initialBodyCount, GameEnvironment.initialSnakeHeadPosition, GameEnvironment.initialDirection);
             _foodController = new FoodController(entities, GameEnvironment.foodBrush, GameEnvironment.foodStroke, GameEnvironment.foodStrokeThickness);
             _brickController = new BrickController(entities, GameEnvironment.brickPositions, GameEnvironment.brickBrush, GameEnvironment.brickStroke, GameEnvironment.brickStrokeThickness);
             //_timer.Tick += Timer_Elapsed;

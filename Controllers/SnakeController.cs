@@ -38,38 +38,15 @@ namespace Snake.Controllers {
         private readonly Brush _headBrush;
         private readonly Brush _bodyBrush;
 
-        private bool _isInitialed = false;
-        public bool IsInitialed { get { return _isInitialed; } }
-
         private int _initialBodyCount;
         public int InitialBodyCount { get { return _initialBodyCount; } }
         private GridPosition _initialHeadPosition;
-        public GridPosition InitialHeadPosition {
-            get { return _initialHeadPosition; }
-            set {
-                if (Equals(value, _initialHeadPosition)) return;
-                _initialHeadPosition = value;
-                if (_isInitialed) {
-                    DeleteSnake();
-                    InitialSnake();
-                }
-            }
-        }
+        public GridPosition InitialHeadPosition { get { return _initialHeadPosition; } }
         /// <summary>
         /// 蛇的方向
         /// </summary>
-        private SnakeDirection _direction = SnakeDirection.Right;
-        public SnakeDirection Direction {
-            get { return _direction; }
-            set {
-                if (Equals(value, _direction)) return;
-                _direction = value;
-                if (_isInitialed) {
-                    DeleteSnake();
-                    InitialSnake();
-                }
-            }
-        }
+        //private SnakeDirection _direction = SnakeDirection.Right;
+        public SnakeDirection Direction { get; set; } = SnakeDirection.Right;
 
         public SnakeController(ICollection<AbstructEntity> entities, Brush headBrush, Brush bodyBrush, int initialBodyCount, GridPosition initialHeadPosition, SnakeDirection direction) {
             _entities = entities;
@@ -77,7 +54,7 @@ namespace Snake.Controllers {
             _headBrush = headBrush;
             _bodyBrush = bodyBrush;
             _initialBodyCount = initialBodyCount;
-            InitialHeadPosition = initialHeadPosition;
+            _initialHeadPosition = initialHeadPosition;
             Direction = direction;
         }
         /// <summary>
@@ -108,15 +85,6 @@ namespace Snake.Controllers {
             }
             foreach (SnakePart s in _snakeBody)
                 _entities.Add(s);
-            _isInitialed = true;
-        }
-
-        private void DeleteSnake() {
-            _entities.Remove(_snakeHead);
-            _snakeHead = null;
-            foreach (var v in _snakeBody)
-                _entities.Remove(v);
-            _snakeBody.Clear();
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace Snake {
 
         public static Brush snakeBodyBrush = Brushes.Green;
         public static Brush snakeHeadBrush = Brushes.Red;
-        public static GridPosition initialSnakeHead = new GridPosition(7, 10);
+        public static GridPosition initialSnakeHeadPosition = new GridPosition(7, 10);
         public static SnakeController.SnakeDirection initialDirection = SnakeController.SnakeDirection.Right;
         public static int initialBodyCount = 3;
 
