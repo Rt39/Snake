@@ -14,7 +14,7 @@
             <!--底部状态栏-->
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>
-                    <TextBlock Text="miaonei"/>
+                    <TextBlock Name="tbk_statusBar"/>
                 </StatusBarItem>
             </StatusBar>
             <!--左侧工具栏-->
@@ -28,33 +28,45 @@
                         </Style>
                     </ToolBar.Resources>
                     <!--调整蛇方向-->
-                    <Button Name="btn_snakeDirection" Click="SnakeDirectionButton_Click" ToolTip="调整蛇方向" Width="30">
+                    <Button Name="btn_snakeDirection" ToolTip="调整蛇方向" Width="30"
+                             Click="SnakeDirectionButton_Click" 
+                            MouseEnter="btn_snakeDirection_MouseEnter"
+                            MouseLeave="btn_snakeDirection_MouseLeave">
                         <Image Stretch="UniformToFill" Source="{Binding Path=DirectionButtonIcon}"/>
                     </Button>
                     <Separator/>
                     <!--滑鼠-->
-                    <RadioButton Name="rbt_mouse" Width="30" ToolTip="鼠标指针" Checked="MouseRadioButton_Checked">
+                    <RadioButton Name="rbt_mouse" Width="30" ToolTip="鼠标指针" 
+                                 Checked="MouseRadioButton_Checked"
+                                 MouseEnter="rbt_mouse_MouseEnter">
                         <Image Stretch="UniformToFill" Source="{Binding Path=CursorIcon}"/>
                     </RadioButton>
                     <!--蛇头-->
-                    <RadioButton Name="rbt_snakeHeadPosition" Width="30" ToolTip="改变蛇头位置" Checked="SnakeHeadPositionRadioButton_Checked">
+                    <RadioButton Name="rbt_snakeHeadPosition" Width="30" ToolTip="改变蛇头位置" 
+                                 Checked="SnakeHeadPositionRadioButton_Checked"
+                                 MouseEnter="rbt_snakeHeadPosition_MouseEnter">
                         <Image Stretch="UniformToFill" Source="{Binding Path=SnakeHeadIcon}"/>
                     </RadioButton>
                     <!--添加砖块-->
-                    <RadioButton Name="rbt_addBrick" Width="30" ToolTip="添加砖块" Checked="AddBrickRadioButton_Checked">
+                    <RadioButton Name="rbt_addBrick" Width="30" ToolTip="添加砖块" 
+                                 Checked="AddBrickRadioButton_Checked"
+                                 MouseEnter="rbt_addBrick_MouseEnter">
                         <Image Stretch="UniformToFill" Source="{Binding Path=BrickIcon}"/>
                     </RadioButton>
                     <!--橡皮-->
-                    <RadioButton Name="rbt_eraseBrick" Width="30" ToolTip="擦除砖块" Checked="EraseBrickRadioButton_Checked">
+                    <RadioButton Name="rbt_eraseBrick" Width="30" ToolTip="擦除砖块" 
+                                 Checked="EraseBrickRadioButton_Checked"
+                                 MouseEnter="rbt_eraseBrick_MouseEnter">
                         <Image Stretch="UniformToFill" Source="{Binding Path=EraserIcon}"/>
                     </RadioButton>
                     <Separator/>
                     <!--提交-->
-                    <Button Name="btn_submit" Width="30" ToolTip="提交" Click="SubmitButton_Click">
+                    <Button Name="btn_submit" Width="30" ToolTip="提交" 
+                            Click="SubmitButton_Click">
                         <Image Stretch="UniformToFill" Source="{Binding Path=TickIcon}"/>
                     </Button>
                     <!--取消-->
-                    <Button Name="btn_cancel" Width="30" ToolTip="取消" Click="CancelButton_Click">
+                    <Button Name="btn_cancel" Width="30" ToolTip="取消">
                         <Image Stretch="UniformToFill" Source="{Binding Path=CrossIcon}"/>
                     </Button>
                 </ToolBar>

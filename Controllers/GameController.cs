@@ -48,10 +48,10 @@ namespace Snake.Controllers {
             _timer.Start();
         }
 
-        //public void StopTimer() {
-        //    _timer.Stop();
-        //    _timer.Dispose();
-        //}
+        public void StopGame() {
+            _timer.Stop();
+            _timer.Dispose();
+        }
 
         private void Timer_Elapsed(object sender, EventArgs e) {
             if (EatFood()) {

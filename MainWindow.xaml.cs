@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Snake.Controllers;
 using Snake.Entities;
+using Snake.ViewModels;
 using Snake.Views;
 
 namespace Snake {
@@ -23,40 +24,32 @@ namespace Snake {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        //public ObservableCollection<AbstructEntity> Entities { get; set; } = new ObservableCollection<AbstructEntity>();
-
-        ////private BackgroundGridController _gameField;
-        ////private SnakeEntity _snakeEntity;
-        ////private GameControl _gameControl;
-
-        //private GameController _gameController;
+        private WelcomePage _welcomePage = new WelcomePage();
+        private NewGameEnvironmentView _newGameEnvironmentView;
+        private EditPage _editPage;
+        private GamePage _gamePage;
 
         public MainWindow() {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
-            frame.Navigate(new EditPage());
-            //DataContext = this;
+            // 导向欢迎界面
+            frame.Navigate(_welcomePage);
+            _welcomePage.btn_newGame.Click += NewGame;
+            _welcomePage.btn_exit.Click += ExitMenuItem_Click;
+        }
 
-            //_gameController = new GameController(Entities);
+        private void NewGame(object sender, EventArgs e) {
+            _newGameEnvironmentView = new NewGameEnvironmentView();
+            NewGameEnvironmentViewModel viewModel = _newGameEnvironmentView.ShowDialog();
+            if (viewModel == null) return;
+            _editPage = new EditPage(viewModel);
+            frame.Navigate(_editPage);
+            _editPage.btn_submit.Click += RunGame;
+        }
 
-            //// .net framework 4.5新功能，不支持Windows XP
-            ////BindingOperations.EnableCollectionSynchronization(Entities, new object());
-            //Loaded += delegate { _gameController.InitialGame(); };
-
-            //_gameController.GameOver += delegate { MessageBox.Show("你死了"); };
-
-            //_gameField = new BackgroundGridController(
-            //    Entities,
-            //    Brushes.White,
-            //    Brushes.Gray
-            //    );
-            //_gameField.GenerateBackgroundGrid();
-
-            //_snakeEntity = new SnakeEntity(gameField, _gameField);
-            //_snakeEntity.InitialSnake(4);
-
-            //_gameControl = new GameControl(gameField, _gameField, _snakeEntity, new List<Entities.Brick>());
-            //_gameControl.StartTick();
+        private void RunGame(object sender, EventArgs e) {
+            _gamePage = new GamePage();
+            frame.Navigate(_gamePage);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
@@ -64,7 +57,7 @@ namespace Snake {
                 e.Cancel = true;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e) {
+        private void ExitMenuItem_Click(object sender, RoutedEventArgs e) {
             this.Close();
         }
 

@@ -18,13 +18,14 @@ namespace Snake.Views {
     /// Interaction logic for NewGameEnvironmentView.xaml
     /// </summary>
     public partial class NewGameEnvironmentView : Window {
+        private NewGameEnvironmentViewModel _newGameEnvironmentViewModel;
         public NewGameEnvironmentView() {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             //DataContext = this;
-            DataContext = new NewGameEnvironmentViewModel();
+            DataContext = _newGameEnvironmentViewModel = new NewGameEnvironmentViewModel();
         }
-
+        #region 事件
         private void BrushButton_Click(object sender, RoutedEventArgs e) {
             //Debug.WriteLine("click");
             ContextMenu cm = (ContextMenu)FindResource("brushSettingMenu");
@@ -63,6 +64,25 @@ namespace Snake.Views {
                 ImageBrush imageBrush = new ImageBrush(image);
                 buttonSender.Background = imageBrush;
             }
+        }
+
+        private void Confirm_Click(object sender, RoutedEventArgs e) {
+            _success = true;
+            this.Close();
+        }
+        #endregion
+
+        // 是否确认
+        private bool _success = false;
+        // 抑制原先的Show方法
+        public new void Show() { throw new Exception("不允许调用本方法"); }
+        /// <summary>
+        /// 阻塞显示，若用户点击确认则返回当前的newGameEnvironmentViewModel，否则返回null
+        /// </summary>
+        /// <returns>用户设定的数值</returns>
+        public new NewGameEnvironmentViewModel ShowDialog() {
+            base.ShowDialog();
+            return _success ? _newGameEnvironmentViewModel : null;
         }
     }
 }

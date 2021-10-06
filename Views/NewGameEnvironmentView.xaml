@@ -227,7 +227,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button Padding="10" Content="确定(_A)"/>
+                <Button Padding="10" Content="确定(_A)" Click="Confirm_Click"/>
                 <Button Padding="10" Grid.Column="1" Content="取消(_C)" Click="Cancel_Click"/>
             </Grid>
         </StackPanel>

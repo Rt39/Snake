@@ -27,9 +27,9 @@ namespace Snake.Views {
         private readonly EditViewModel _editViewModel;
         #endregion
 
-        public EditPage() {
+        public EditPage(NewGameEnvironmentViewModel viewModel) {
             InitializeComponent();
-            DataContext = _editViewModel = new EditViewModel();
+            DataContext = _editViewModel = new EditViewModel(viewModel);
             rbt_mouse.IsChecked = true;
         }
         #region 事件
@@ -106,11 +106,31 @@ namespace Snake.Views {
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e) {
-            throw new NotImplementedException();
+            _editViewModel.Submit();
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e) {
-            throw new NotImplementedException();
+        private void btn_snakeDirection_MouseEnter(object sender, MouseEventArgs e) {
+            tbk_statusBar.Text = "调整蛇头的方向";
+        }
+
+        private void btn_snakeDirection_MouseLeave(object sender, MouseEventArgs e) {
+            tbk_statusBar.Text = "";
+        }
+
+        private void rbt_mouse_MouseEnter(object sender, MouseEventArgs e) {
+            tbk_statusBar.Text = "鼠标指针";
+        }
+
+        private void rbt_snakeHeadPosition_MouseEnter(object sender, MouseEventArgs e) {
+            tbk_statusBar.Text = "调整蛇头位置";
+        }
+
+        private void rbt_addBrick_MouseEnter(object sender, MouseEventArgs e) {
+            tbk_statusBar.Text = "添加砖块";
+        }
+
+        private void rbt_eraseBrick_MouseEnter(object sender, MouseEventArgs e) {
+            tbk_statusBar.Text = "擦除砖块";
         }
 
 

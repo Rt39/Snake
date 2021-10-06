@@ -104,8 +104,8 @@ namespace Snake.ViewModels {
         public BitmapImage CrossIcon { get { return Properties.Resources.close.ToBitmapImage(); } }
         #endregion
 
-        public EditViewModel(/*TODO: 传递NewGameEnviromnmentViewModel*/) {
-            _newGameEnvironmentViewModel = new NewGameEnvironmentViewModel();// TODO
+        public EditViewModel(NewGameEnvironmentViewModel viewModel) {
+            _newGameEnvironmentViewModel = viewModel;
             _backgroundGridController = new BackgroundGridController(Entities, _newGameEnvironmentViewModel.Grid1Fill, _newGameEnvironmentViewModel.Grid2Fill);
             _snakeController = new SnakeController(Entities, _newGameEnvironmentViewModel.SnakeHeadFill, _newGameEnvironmentViewModel.SnakeBodyFill, _newGameEnvironmentViewModel.InitialBodyCount, GameEnvironment.initialSnakeHead, GameEnvironment.initialDirection);
             _backgroundGridController.GenerateBackgroundGrid();
@@ -127,5 +127,11 @@ namespace Snake.ViewModels {
             _bricks.Remove(b);
         }
         #endregion
+        public void Submit() {
+            _newGameEnvironmentViewModel.Submit();
+            GameEnvironment.initialSnakeHead = SnakeHeadPosition;
+            GameEnvironment.initialDirection = SnakeDirection;
+            GameEnvironment.brickPositions = _bricks.Select(t => t.Position).ToList();
+        }
     }
 }

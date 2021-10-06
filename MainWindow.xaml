@@ -21,7 +21,7 @@
                 <MenuItem Header="重新开始(_R)"/>
                 <MenuItem Header="保存(_S)" Command=""/>
                 <Separator/>
-                <MenuItem Header="退出(_E)" Click="MenuItem_Click"/>
+                <MenuItem Header="退出(_E)" Click="ExitMenuItem_Click"/>
             </MenuItem>
         </Menu>
         <!--<ItemsControl ItemsSource="{Binding Entities, UpdateSourceTrigger=PropertyChanged}">

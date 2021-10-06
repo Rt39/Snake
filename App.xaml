@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Snake"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+        <FontFamily x:Key="DFShaoNvW5">pack://application:,,,/Fonts/#华康少女文字W5</FontFamily>
     </Application.Resources>
 </Application>

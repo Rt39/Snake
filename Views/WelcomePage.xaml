@@ -13,11 +13,15 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="贪吃蛇" FontFamily="Simsun" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20"/>
+            <TextBlock Text="贪吃蛇" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20"/>
             <StackPanel Grid.Row="1" Orientation="Vertical">
-                <Button FontFamily="Simsun" Content="新游戏"/>
-                <Button Content="载入"/>
-                <Button FontFamily="Simsun" Content="退出"/>
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="FontFamily" Value="{StaticResource DFShaoNvW5}"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Name="btn_newGame" Content="新游戏"/>
+                <Button Name="btn_exit" Content="退出"/>
             </StackPanel>
         </Grid>
     </Viewbox>
