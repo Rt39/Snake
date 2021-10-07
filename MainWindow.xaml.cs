@@ -53,12 +53,19 @@ namespace Snake {
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            if (MessageBox.Show("", "", MessageBoxButton.YesNoCancel) == MessageBoxResult.Cancel)
-                e.Cancel = true;
+            // TODO: Dao层完成确认是否保存
+            //if (MessageBox.Show("", "", MessageBoxButton.YesNoCancel) == MessageBoxResult.Cancel)
+            //    e.Cancel = true;
+
         }
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e) {
             this.Close();
+        }
+
+        private void NewGameMenuItem_Click(object sender, RoutedEventArgs e) {
+            if (_gamePage != null) _gamePage.StopGame();
+            NewGame(sender, e);
         }
 
         //private void ChangeDirection(object sender, KeyEventArgs e) {

@@ -12,21 +12,49 @@ namespace Snake.Controllers {
     /// 负责计时及控制游戏状态
     /// </summary>
     public class GameController : AbstructController {
+        #region 字段
         private readonly Timer _timer;
         //private readonly DispatcherTimer _timer;
         private readonly BackgroundGridController _backgroundGridController;
         private readonly SnakeController _snakeController;
         private readonly BrickController _brickController;
         private readonly FoodController _foodController;
+        #endregion
 
+        /// <summary>
+        /// 游戏结束信号
+        /// </summary>
         public event EventHandler<EventArgs> GameOver;
 
+        #region 属性
+        /// <summary>
+        /// 禁着点，蛇头、蛇身及砖块所在位置
+        /// 不允许生成食物
+        /// </summary>
         public IEnumerable<GridPosition> ForbiddenGridPosition {
             get {
                 return _snakeController.SnakeBodyPositions.Union(new List<GridPosition>() { _snakeController.SnakeHeadPosition }).Union(_brickController.BrickPositions);
             }
         }
 
+        /// <summary>
+        /// 蛇头方向，修改时立刻移动蛇
+        /// </summary>
+        public SnakeController.SnakeDirection Direction {
+            get {
+                return _snakeController.Direction;
+            }
+            set {
+                _snakeController.Direction = value;
+                if (_timer.Enabled)
+                    Timer_Elapsed(this, null);
+            }
+        }
+        #endregion
+        /// <summary>
+        /// 游戏控制构造函数，设置项从GameEnvironment中读取
+        /// </summary>
+        /// <param name="entities">需要绘制的集合</param>
         public GameController(ICollection<AbstructEntity> entities) {
             //_timer = new DispatcherTimer();
             _timer = new Timer();
@@ -39,7 +67,10 @@ namespace Snake.Controllers {
             //_timer.Tick += Timer_Elapsed;
             _timer.Elapsed += Timer_Elapsed;
         }
-
+        #region 公共函数
+        /// <summary>
+        /// 开始游戏
+        /// </summary>
         public void InitialGame() {
             _backgroundGridController.GenerateBackgroundGrid();
             _brickController.GenerateBricks();
@@ -47,12 +78,16 @@ namespace Snake.Controllers {
             _foodController.GenerateFood(ForbiddenGridPosition);
             _timer.Start();
         }
-
+        /// <summary>
+        /// 结束游戏，不允许重新启动
+        /// </summary>
         public void StopGame() {
             _timer.Stop();
             _timer.Dispose();
         }
+        #endregion
 
+        #region 私有函数
         private void Timer_Elapsed(object sender, EventArgs e) {
             if (EatFood()) {
                 _snakeController.MoveSnakeRetainTail();
@@ -78,16 +113,6 @@ namespace Snake.Controllers {
         private bool IsgameOver() {
             return _snakeController.SnakeBodyPositions.Union(_brickController.BrickPositions).Contains(_snakeController.SnakeHeadPosition);
         }
-
-        public SnakeController.SnakeDirection Direction {
-            get {
-                return _snakeController.Direction;
-            }
-            set {
-                _snakeController.Direction = value;
-                if (_timer.Enabled)
-                    Timer_Elapsed(this, null);
-            }
-        }
+        #endregion
     }
 }

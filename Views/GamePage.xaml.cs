@@ -41,6 +41,12 @@ namespace Snake.Views {
             window.KeyUp += ChangeDirection;
         }
 
+        public void StopGame() {
+            _gameController.StopGame();
+            Window window = Window.GetWindow(this);
+            window.KeyUp -= ChangeDirection;
+        }
+
         private void ChangeDirection(object sender, KeyEventArgs e) {
             switch (e.Key) {
                 case Key.Left:

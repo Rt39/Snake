@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Snake.Views"
+        xmlns:local="clr-namespace:Snake.Views" xmlns:viewmodels="clr-namespace:Snake.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:NewGameEnvironmentViewModel}"
         mc:Ignorable="d"
         Title="NewGameEnvironmentView"
         Height="450" Width="300">
@@ -48,13 +48,13 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Target="{Binding ElementName=tbx_row}">行数(_R)</Label>
-                    <TextBox Grid.Column="1" Name="tbx_row" Text="{Binding Row}"/>
+                    <TextBox Grid.Column="1" Name="tbx_row" Text="{Binding Row, Mode=TwoWay}"/>
                     <Label Grid.Row="1" Target="{Binding ElementName=tbx_column}">列数(_L)</Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" Name="tbx_column" Text="{Binding Column}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Name="tbx_column" Text="{Binding Column, Mode=TwoWay}"/>
                     <Label Grid.Row="2" Target="{Binding ElementName=tbx_size}">网格大小(_S)</Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_size" Text="{Binding GridSize}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_size" Text="{Binding GridSize, Mode=TwoWay}"/>
                     <Label Grid.Row="3" Target="{Binding ElementName=tbx_timeInterval}">时钟间隔(_T)</Label>
-                    <TextBox Grid.Row="3" Grid.Column="1" Name="tbx_timeInterval" Text="{Binding TimeInterval}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Name="tbx_timeInterval" Text="{Binding TimeInterval, Mode=TwoWay}"/>
                 </Grid>
             </GroupBox>
             <GroupBox>
@@ -74,11 +74,11 @@
                     <Button Name="btn_grid1Color" 
                             Grid.Column="1" 
                             Click="BrushButton_Click"
-                            Background="{Binding Grid1Fill}" 
+                            Background="{Binding Grid1Fill, Mode=TwoWay}" 
                             Template="{StaticResource colorPickerTemplate}">
                         <!--<Button.Template>
                             <ControlTemplate>
-                                <Rectangle Fill="{Binding Grid1Fill}"/>
+                                <Rectangle Fill="{Binding Grid1Fill, Mode=TwoWay}"/>
                             </ControlTemplate>
                         </Button.Template>-->
                     </Button>
@@ -86,11 +86,11 @@
                     <Button Name="btn_grid2Color"
                             Grid.Row="1" Grid.Column="1" 
                             Click="BrushButton_Click" 
-                            Background="{Binding Grid2Fill}"
+                            Background="{Binding Grid2Fill, Mode=TwoWay}"
                             Template="{StaticResource colorPickerTemplate}">
                         <!--<Button.Template>
                             <ControlTemplate>
-                                <Rectangle Fill="{Binding Grid2Fill}"/>
+                                <Rectangle Fill="{Binding Grid2Fill, Mode=TwoWay}"/>
                             </ControlTemplate>
                         </Button.Template>-->
                     </Button>
@@ -114,28 +114,28 @@
                     <Button Name="btn_snakeBodyFill" 
                             Grid.Column="1" 
                             Click="BrushButton_Click" 
-                            Background="{Binding SnakeBodyFill}"
+                            Background="{Binding SnakeBodyFill, Mode=TwoWay}"
                             Template="{StaticResource colorPickerTemplate}">
                         <!--<Button.Template>
                             <ControlTemplate>
-                                <Rectangle Fill="{Binding SnakeBodyFill}"/>
+                                <Rectangle Fill="{Binding SnakeBodyFill, Mode=TwoWay}"/>
                             </ControlTemplate>
                         </Button.Template>-->
                     </Button>
                     <Label Target="{Binding ElementName=btn_snakeHeadFill}" Grid.Row="1">蛇头(_H)</Label>
                     <Button Name="btn_snakeHeadFill" 
                             Grid.Row="1" Grid.Column="1" 
-                            Background="{Binding SnakeHeadFill}"
+                            Background="{Binding SnakeHeadFill, Mode=TwoWay}"
                             Click="BrushButton_Click"
                             Template="{StaticResource colorPickerTemplate}">
                         <!--<Button.Template>
                             <ControlTemplate>
-                                <Rectangle Fill="{Binding SnakeHeadFill}"/>
+                                <Rectangle Fill="{Binding SnakeHeadFill, Mode=TwoWay}"/>
                             </ControlTemplate>
                         </Button.Template>-->
                     </Button>
                     <Label Target="{Binding ElementName=tbx_initalBodyCount}" Grid.Row="2">初始身体节数(_I)</Label>
-                    <TextBox Name="tbx_initalBodyCount" Grid.Row="2" Grid.Column="1" Text="{Binding InitialBodyCount}"/>
+                    <TextBox Name="tbx_initalBodyCount" Grid.Row="2" Grid.Column="1" Text="{Binding InitialBodyCount, Mode=TwoWay}"/>
                 </Grid>
             </GroupBox>
             <GroupBox>
@@ -156,11 +156,11 @@
                     <Button Name="btn_foodFill" 
                             Grid.Column="1" 
                             Click="BrushButton_Click"
-                            Background="{Binding FoodFill}"
+                            Background="{Binding FoodFill, Mode=TwoWay}"
                             Template="{StaticResource colorPickerTemplate}">
                         <!--<Button.Template>
                             <ControlTemplate>
-                                <Rectangle Fill="{Binding FoodFill}"/>
+                                <Rectangle Fill="{Binding FoodFill, Mode=TwoWay}"/>
                             </ControlTemplate>
                         </Button.Template>-->
                     </Button>
@@ -168,16 +168,16 @@
                     <Button Name="btn_foodStroke" 
                             Grid.Row="1" Grid.Column="1" 
                             Click="BrushButton_Click" 
-                            Background="{Binding FoodStroke}" 
+                            Background="{Binding FoodStroke, Mode=TwoWay}" 
                             Template="{StaticResource colorPickerTemplate}">
                         <!--<Button.Template>
                             <ControlTemplate>
-                                <Rectangle Fill="{Binding FoodStroke}"/>
+                                <Rectangle Fill="{Binding FoodStroke, Mode=TwoWay}"/>
                             </ControlTemplate>
                         </Button.Template>-->
                     </Button>
                     <Label Grid.Row="2">边框粗细</Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_foodStrokeThickness"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_foodStrokeThickness" Text="{Binding Path=FoodStrokeThickness, Mode=TwoWay}"/>
                 </Grid>
             </GroupBox>
             <GroupBox>
@@ -198,11 +198,11 @@
                     <Button Name="btn_brickFill" 
                             Grid.Column="1"
                             Click="BrushButton_Click" 
-                            Background="{Binding BrickFill}"
+                            Background="{Binding BrickFill, Mode=TwoWay}"
                             Template="{StaticResource colorPickerTemplate}">
                         <!--<Button.Template>
                             <ControlTemplate>
-                                <Rectangle Fill="{Binding BrickFill}"/>
+                                <Rectangle Fill="{Binding BrickFill, Mode=TwoWay}"/>
                             </ControlTemplate>
                         </Button.Template>-->
                     </Button>
@@ -210,16 +210,16 @@
                     <Button Name="btn_brickStroke"
                             Grid.Row="1" Grid.Column="1"
                             Click="BrushButton_Click"
-                            Background="{Binding BrickStroke}"
+                            Background="{Binding BrickStroke, Mode=TwoWay}"
                             Template="{StaticResource colorPickerTemplate}">
                         <!--<Button.Template>
                             <ControlTemplate>
-                                <Rectangle Fill="{Binding BrickStroke}"/>
+                                <Rectangle Fill="{Binding BrickStroke, Mode=TwoWay}"/>
                             </ControlTemplate>
                         </Button.Template>-->
                     </Button>
                     <Label Grid.Row="2">边框粗细</Label>
-                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_brickStrokeThickness"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="tbx_brickStrokeThickness" Text="{Binding Path=BrickStrokeThickness, Mode=TwoWay}"/>
                 </Grid>
             </GroupBox>
             <Grid>

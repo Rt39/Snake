@@ -14,6 +14,7 @@ using System.Windows.Input;
 
 namespace Snake.ViewModels {
     public class EditViewModel : AbstructViewModel {
+        #region 字段
         // canvas所绑定的属性
         public ObservableCollection<AbstructEntity> Entities { get; } = new ObservableCollection<AbstructEntity>();
 
@@ -26,6 +27,7 @@ namespace Snake.ViewModels {
         // 无法使用SnakeController来绘制，只能手动绘制SnakePart
         private readonly List<SnakePart> _snakeBody = new List<SnakePart>();
         private SnakePart _snakeHead;
+        #endregion
         #endregion
 
         #region 属性
@@ -76,7 +78,6 @@ namespace Snake.ViewModels {
                 }
             }
         }
-        #endregion
 
         private SnakeController.SnakeDirection _direction = SnakeController.SnakeDirection.Right;
         /// <summary>
@@ -92,6 +93,7 @@ namespace Snake.ViewModels {
                 OnPropertyChanged("DirectionButtonIcon");
             }
         }
+        #endregion
 
         #region 图标
         public BitmapImage DirectionButtonIcon {
@@ -118,6 +120,7 @@ namespace Snake.ViewModels {
         public BitmapImage CrossIcon { get { return Properties.Resources.close.ToBitmapImage(); } }
         #endregion
 
+        #region 函数
         public EditViewModel(NewGameEnvironmentViewModel viewModel) {
             _newGameEnvironmentViewModel = viewModel;
             _backgroundGridController = new BackgroundGridController(Entities, _newGameEnvironmentViewModel.Grid1Fill, _newGameEnvironmentViewModel.Grid2Fill);
@@ -141,6 +144,7 @@ namespace Snake.ViewModels {
             _bricks.Remove(b);
         }
         #endregion
+        #region 绘制蛇相关函数
         private void InitialSnake() {
             _snakeHead = new SnakePart(SnakeHeadPosition, _newGameEnvironmentViewModel.SnakeHeadFill, null, 0);
 
@@ -174,12 +178,17 @@ namespace Snake.ViewModels {
                 Entities.Remove(v);
             _snakeBody.Clear();
         }
+        #endregion
 
+        /// <summary>
+        /// 将用户设置保存至GameEnvrionment
+        /// </summary>
         public void Submit() {
             _newGameEnvironmentViewModel.Submit();
             GameEnvironment.initialSnakeHeadPosition = SnakeHeadPosition;
             GameEnvironment.initialDirection = Direction;
             GameEnvironment.brickPositions = _bricks.Select(t => t.Position).ToList();
         }
+        #endregion
     }
 }
