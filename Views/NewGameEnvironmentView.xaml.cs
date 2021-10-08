@@ -25,7 +25,7 @@ namespace Snake.Views {
             //DataContext = this;
             DataContext = _newGameEnvironmentViewModel = new NewGameEnvironmentViewModel();
         }
-        #region 事件
+        #region 事件调用
         private void BrushButton_Click(object sender, RoutedEventArgs e) {
             //Debug.WriteLine("click");
             ContextMenu cm = (ContextMenu)FindResource("brushSettingMenu");

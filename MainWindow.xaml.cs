@@ -24,10 +24,12 @@ namespace Snake {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        #region 字段
         private WelcomePage _welcomePage = new WelcomePage();
         private NewGameEnvironmentView _newGameEnvironmentView;
         private EditPage _editPage;
         private GamePage _gamePage;
+        #endregion
 
         public MainWindow() {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -37,7 +39,7 @@ namespace Snake {
             _welcomePage.btn_newGame.Click += NewGame;
             _welcomePage.btn_exit.Click += ExitMenuItem_Click;
         }
-
+        #region 事件处理
         private void NewGame(object sender, EventArgs e) {
             _newGameEnvironmentView = new NewGameEnvironmentView();
             NewGameEnvironmentViewModel viewModel = _newGameEnvironmentView.ShowDialog();
@@ -45,6 +47,7 @@ namespace Snake {
             _editPage = new EditPage(viewModel);
             frame.Navigate(_editPage);
             _editPage.btn_submit.Click += RunGame;
+            _editPage.btn_cancel.Click += GoBackToWelcomePage;
         }
 
         private void RunGame(object sender, EventArgs e) {
@@ -56,7 +59,6 @@ namespace Snake {
             // TODO: Dao层完成确认是否保存
             //if (MessageBox.Show("", "", MessageBoxButton.YesNoCancel) == MessageBoxResult.Cancel)
             //    e.Cancel = true;
-
         }
 
         private void ExitMenuItem_Click(object sender, RoutedEventArgs e) {
@@ -68,25 +70,9 @@ namespace Snake {
             NewGame(sender, e);
         }
 
-        //private void ChangeDirection(object sender, KeyEventArgs e) {
-        //    switch (e.Key) {
-        //        case Key.Left:
-        //            if (_gameController.Direction != SnakeController.SnakeDirection.Left && _gameController.Direction != SnakeController.SnakeDirection.Right)
-        //                _gameController.Direction = SnakeController.SnakeDirection.Left;
-        //            break;
-        //        case Key.Up:
-        //            if (_gameController.Direction != SnakeController.SnakeDirection.Up && _gameController.Direction != SnakeController.SnakeDirection.Down)
-        //                _gameController.Direction = SnakeController.SnakeDirection.Up;
-        //            break;
-        //        case Key.Right:
-        //            if (_gameController.Direction != SnakeController.SnakeDirection.Left && _gameController.Direction != SnakeController.SnakeDirection.Right)
-        //                _gameController.Direction = SnakeController.SnakeDirection.Right;
-        //            break;
-        //        case Key.Down:
-        //            if (_gameController.Direction != SnakeController.SnakeDirection.Up && _gameController.Direction != SnakeController.SnakeDirection.Down)
-        //                _gameController.Direction = SnakeController.SnakeDirection.Down;
-        //            break;
-        //    }
-        //}
+        private void GoBackToWelcomePage(object sender, EventArgs e) {
+            frame.Navigate(_welcomePage);
+        }
+        #endregion
     }
 }
